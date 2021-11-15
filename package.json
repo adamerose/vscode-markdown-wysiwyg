@@ -1,7 +1,7 @@
 {
-	"name": "webpack-sample",
-	"displayName": "webpack-sample",
-	"description": "",
+	"name": "markdown-editor",
+	"displayName": "Markdown WYSIWYG Editor",
+	"description": "A WYSIWYG Editor for markdown files",
 	"version": "0.0.1",
 	"publisher": "vscode-samples",
 	"private": true,
@@ -17,16 +17,23 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWebpack"
+		"onCustomEditor:markdownEditorExtension.markdown"
 	],
 	"main": "./dist/extension",
 	"contributes": {
-		"commands": [
+		"customEditors": [
 			{
-				"command": "extension.helloWebpack",
-				"title": "Hello Webpack"
+				"viewType": "markdownEditorExtension.markdown",
+				"displayName": "Markdown WYSIWYG Editor",
+				"selector": [
+					{
+						"filenamePattern": "*.md"
+					}
+				],
+				"priority": "default"
 			}
-		]
+		],
+		"commands": []
 	},
 	"scripts": {
 		"vscode:prepublish": "webpack --mode production",
@@ -45,5 +52,9 @@
 		"typescript": "^4.4.3",
 		"webpack": "^4.43.0",
 		"webpack-cli": "^3.3.11"
+	},
+	"dependencies": {
+		"@ckeditor/ckeditor5-build-classic": "^27.1.0",
+		"@jdinabox/ckeditor5-build-markdown": "^27.0.0"
 	}
 }

@@ -1,0 +1,45 @@
+:root {
+	/* https://github.com/ckeditor/ckeditor5/issues/9676#issuecomment-847241075 */
+	--height: 100%;
+	--width: 100%;
+}
+
+* {
+	/* This allows usage of height: 100% on elements with borders without causing scrollbars */
+	box-sizing: border-box;
+}
+
+body,
+html {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.container {
+	height: var(--height);
+	width: var(--width);
+}
+
+/* Entire CKEditor5 div */
+.ck-editor {
+	height: 100% !important;
+	max-height: 100% !important;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Body of the CKEditor where you input content */
+.ck-editor__main {
+	max-height: 100%;
+	overflow-y: hidden;
+	flex-grow: 1;
+}
+
+/* Another div nested inside .ck-editor__main */
+.ck-editor__editable {
+	overflow-y: scroll;
+	height: 100%;
+	max-height: 100%;
+}
