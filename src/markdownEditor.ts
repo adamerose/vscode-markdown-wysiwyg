@@ -97,7 +97,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		const ckeditorUri = webview.asWebviewUri(
 			vscode.Uri.joinPath(
 				this.context.extensionUri,
-				...'node_modules/@jdinabox/ckeditor5-build-markdown/build/ckeditor.js'.split('/')
+				...'ckeditor5-build-markdown/build/ckeditor.js'.split('/')
 			)
 		);
 
