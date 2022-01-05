@@ -9,9 +9,9 @@
 	<body>
 		<div id="editor"></div>
 
-		<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
+		<script src="../ckeditor5-build-markdown/build/ckeditor.js"></script>
 		<script>
-			ClassicEditor.create(document.querySelector('#editor'))
+			MarkdownEditor.create(document.querySelector('#editor'))
 				.then((editor) => {
 					console.log(editor);
 				})
