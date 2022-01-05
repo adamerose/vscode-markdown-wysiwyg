@@ -1,6 +1,5 @@
-.vscode
-node_modules
-src/**
-package-json.lock
-tsconfig.json
-webpack.config.js
+**/*
+!**/dist/**/*
+!LICENSE.txt
+!ckeditor5-build-markdown/build/**/*
+!media/**/*
