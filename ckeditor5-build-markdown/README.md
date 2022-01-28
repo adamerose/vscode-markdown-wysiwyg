@@ -4,3 +4,5 @@ Using this as a template:
 https://github.com/ckeditor/ckeditor5/tree/master/packages/ckeditor5-build-classic
 
 Any changes to the CKEditor5 editor need to be built by running `npm build` in this folder. The root extension code webview reads `ckeditor.js` from the build folder output.
+
+`npm start` was enabled using code from this PR https://github.com/ckeditor/ckeditor5/pull/10130/files

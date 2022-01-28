@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>CKEditor 5 Markdown Editor</title>
+		<style>
+			body {
+				max-width: 800px;
+				margin: 20px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>CKEditor 5 Markdown Editor</h1>
+
+		<div id="editor"></div>
+
+		<script src="/ckeditor.js"></script>
+
+		<script>
+			MarkdownEditor.create(document.querySelector('#editor'))
+				.then((editor) => {
+					window.editor = editor;
+
+					function readTextFile(file, callback) {
+						var rawFile = new XMLHttpRequest();
+						rawFile.open('GET', file, false);
+						rawFile.onreadystatechange = function () {
+							if (rawFile.readyState === 4) {
+								if (rawFile.status === 200 || rawFile.status == 0) {
+									var allText = rawFile.responseText;
+									callback(allText);
+								}
+							}
+						};
+						rawFile.send(null);
+					}
+
+					readTextFile('example.md', (data) => editor.setData(data));
+				})
+				.catch((error) => {
+					console.error('There was a problem initializing the editor.', error);
+				});
+		</script>
+	</body>
+</html>

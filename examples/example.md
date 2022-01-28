@@ -1,136 +1,155 @@
-This a test of all markdown possibilities:
 
 ## Headings
+# h1 Heading
+## h2 Heading
+### h3 Heading
+#### h4 Heading
+##### h5 Heading
+###### h6 Heading
 
-## h1 Heading 1
-
-## h2 Heading 2
-
-### h3 Heading 3
-
-#### h4 Heading 4
-
-##### h5 Heading 5
-
-###### h6 Heading 6
 
 ## Horizontal Rules
+
+___
+
+---
+
+***
+
+
+## Typographic replacements
+
+Enable typographer option to see result.
+
+(c) (C) (r) (R) (tm) (TM) (p) (P) +-
+
+test.. test... test..... test?..... test!....
+
+!!!!!! ???? ,,  -- ---
+
+"Smartypants, double quotes" and 'single quotes'
+
 
 ## Emphasis
 
 **This is bold text**
 
-**This is bold text**
+__This is bold text__
+
+*This is italic text*
 
 _This is italic text_
 
-_This is italic text_
+~~Strikethrough~~
 
-~Strikethrough~
-
-## Links
-
-[link text](http://dev.nodeca.com)
-
-[link with title](http://nodeca.github.io/pica/demo/)
-
-This is [an example](http://example.com/) inline link.
-
-[This link](http://example.net/) has no title attribute.
 
 ## Blockquotes
 
+
 > Blockquotes can also be nested...
+> > ...by using greater-than signs right next to each other...
+> > > ...or with spaces between arrows.
 
-> ...by using additional greater-than signs right next to each other...
-
-> ...or with spaces between arrows.
-
-## Indentation
-
-indentation 1-1
-
-indentation 1-2  
-indentation 2-1
 
 ## Lists
 
-### Unordered
+Unordered
 
-- Create a list by starting a line with +, -, or \*
-- Sub-lists are made by indenting 2 spaces:
-  - Marker character change forces new list start:
-    - Ac tristique libero volutpat at
-    - Facilisis in pretium nisl aliquet
-    - Nulla volutpat aliquam velit
-- Very easy!
++ Create a list by starting a line with `+`, `-`, or `*`
++ Sub-lists are made by indenting 2 spaces:
+  - Ac tristique libero volutpat at
+  - Facilisis in pretium nisl aliquet
+  - Nulla volutpat aliquam velit
++ Very easy!
 
-### Ordered
+Ordered
 
-#### Numers in sequence
-
-1.  Lorem ipsum dolor sit amet
-2.  Consectetur adipiscing elit
-3.  Integer molestie lorem at massa
-
-#### Numers not in sequence
-
-1.  You can use sequential numbers...
-2.  ...or keep all the numbers as 1.
-
-## Images
-
-![Minion](https://octodex.github.com/images/dinotocat.png)
-
-![Stormtroopocat](https://octodex.github.com/images/saritocat.png)
-
-Like links, Images also have a footnote style syntax
-
-![Alt text](https://octodex.github.com/images/daftpunktocat-thomas.gif)
-
-With a reference later in the document defining the URL location:
-
-## Tables
-
-| Option | Description                                                               |
-|--------|---------------------------------------------------------------------------|
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default.    |
-| ext    | extension to be used for dest files.                                      |
-
-Right aligned columns
-
-| Option | Description                                                               |
-|--------|---------------------------------------------------------------------------|
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default.    |
-| ext    | extension to be used for dest files.                                      |
+1. Lorem ipsum dolor sit amet
+2. Consectetur adipiscing elit
+3. Integer molestie lorem at massa
 
 ## Code
 
-Inline code
 
 Indented code
 
-```plaintext
-// Some comments
+    line 1 of code
+    line 2 of code
+    line 3 of code
+
+
+Block code with backticks
+
+```
 line 1 of code
 line 2 of code
 line 3 of code
 ```
 
-Block code "fences"
+## Tables
 
-```plaintext
-Sample text here...
-```
+| Option | Description                                                 |
+|--------|-------------------------------------------------------------|
+| foo    | Lorem ipsum dolor sit amet,                                 |
+| bar    | Ut enim ad minim veniam, quis nostrud exercitation ullamco. |
+| baz    | Excepteur sint occaecat cupidatat non proident.             |
 
-Syntax highlighting
+## Links
 
-```plaintext
+[example](https://example.com)
+
+[example link with hover](https://example.com "hover text!")
+
+
+## Images
+
+![Minion](https://octodex.github.com/images/original.png)
+
+## Unsupported Features
+
+### Autoconverted hyperlink 
+See https://example.com
+
+### List start numbering with offset
+57. foo
+58. bar
+
+### Definition List
+First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.
+
+### Footnotes
+Footnote 1 link[^first].  
+Footnote 2 link[^second].  
+Duplicated footnote reference[^second].  
+[^first]: Footnote 1 text  
+[^second]: Footnote 2 text.  
+
+### Subscript / Superscript
+O(n<sup>2</sup>)  
+H<sub>2</sub>O 
+
+### Right aligned table columns
+
+| Option |                                                 Description |
+|-------:|------------------------------------------------------------:|
+|    foo |                                 Lorem ipsum dolor sit amet, |
+|    bar | Ut enim ad minim veniam, quis nostrud exercitation ullamco. |
+|    baz |             Excepteur sint occaecat cupidatat non proident. |
+
+### Syntax highlighting
+
+``` js
 var foo = function (bar) {
   return bar++;
 };
 
 console.log(foo(5));
 ```
+
+### Inline code
+Inline `code`
