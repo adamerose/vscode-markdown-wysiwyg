@@ -10,16 +10,19 @@
 		<div id="editor"></div>
 
 		<script src="../ckeditor5-build-markdown/build/ckeditor.js"></script>
+		<script src="./sample-markdown-data.js"></script>
 		<script>
 			MarkdownEditor.create(document.querySelector('#editor'))
 				.then((editor) => {
 					console.log(editor);
+					editor.setData(data);
 				})
 				.catch((error) => {
 					console.error(error);
 				});
 		</script>
+
 		<link href="./fullscreen.css" rel="stylesheet" type="text/css" />
-		<link href="./colors.css" rel="stylesheet" type="text/css" />
+		<link href="./sample-colors.css" rel="stylesheet" type="text/css" />
 	</body>
 </html>

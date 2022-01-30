@@ -1,3 +1,7 @@
+/* 
+These all get automatically set by VS Code in extension web views. 
+I only have them here to use in the sample HTML pages to see how it would look in VS Code*/
+
 :root {
 	--vscode-activityBarBadge-background: #007acc;
 	--vscode-editor-background: #1e1e1e;
@@ -559,4 +563,16 @@
 	--vscode-welcomePage-buttonHoverBackground: null;
 	--vscode-window-activeBorder: null;
 	--vscode-window-inactiveBorder: null;
+}
+
+:root {
+	color: var(--vscode-editor-foreground);
+}
+code {
+	color: var(--vscode-textPreformat-foreground);
+}
+
+th {
+	display: table-cell;
+	vertical-align: inherit;
 }

@@ -1,3 +1,10 @@
+npm install -g vsce
+(cd ./ckeditor5-build-markdown && npm run build)
+vsce package
+code --install-extension markdown-editor-0.0.1.vsix
+
+# Template Readme
+
 # Webpack & Extensions
 
 This is an extension that uses [https://webpack.js.org]() to bundle and minify its sources. Using webpack will help to reduce the install- and startup-time of large extensions because instead of hundreds of files, a single file is produced.
