@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans');
+
+:root {
+	font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: inherit;
+}

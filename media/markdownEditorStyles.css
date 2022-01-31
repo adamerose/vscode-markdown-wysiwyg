@@ -1,0 +1,217 @@
+:root {
+	/* https://github.com/ckeditor/ckeditor5/issues/9676#issuecomment-847241075 */
+	--height: 100%;
+	--width: 100%;
+
+	color: var(--foreground);
+}
+
+* {
+	/* This allows usage of height: 100% on elements with borders without causing scrollbars */
+	box-sizing: border-box;
+}
+
+body,
+html {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+}
+
+.container {
+	height: var(--height);
+	width: var(--width);
+}
+
+/* Entire CKEditor5 div */
+.ck-editor {
+	height: 100% !important;
+	max-height: 100% !important;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Body of the CKEditor where you input content */
+.ck-editor__main {
+	max-height: 100%;
+	overflow-y: hidden;
+	flex-grow: 1;
+}
+
+/* Another div nested inside .ck-editor__main */
+.ck-editor__main > .ck-editor__editable {
+	overflow-y: scroll;
+	height: 100%;
+	max-height: 100%;
+}
+
+.ck-editor__editable,
+.ck-toolbar {
+	border: none !important;
+}
+
+/* -------------------------- Colors -------------------------- */
+
+:root {
+	/* Uncomment to do manual style override */
+	/* --vscode-editor-background: #1e1e1e;
+	--vscode-editorWidget-background: #252526;
+	--vscode-activityBar-background: #333333;
+	--vscode-dropdown-background: #3c3c3c;
+	--vscode-list-dropBackground: #383b3d;
+	--vscode-badge-background: #4d4d4d;
+
+	--vscode-button-foreground: #ffffff;
+	--vscode-dropdown-foreground: #f0f0f0;
+	--vscode-editor-foreground: #d4d4d4;
+	--vscode-menu-foreground: #cccccc;
+	--vscode-icon-foreground: #c5c5c5;
+
+	--vscode-widget-shadow: #0000005c;
+
+	--vscode-focusBorder: #007fd4;
+	--vscode-quickInputList-focusBackground: #062f4a; */
+
+	/*  Main theming variables ----------------------------------------------------------------- */
+	/* This is the base color for all text and icons outside the editor body */
+	--foreground: var(--vscode-editor-foreground);
+	/* This is the background color for the editor body */
+	--background-1: var(--vscode-editor-background);
+	/* This is the background color for the toolbar */
+	--background-2: var(--vscode-editorWidget-background);
+
+	--background-3: var(--vscode-dropdown-background);
+	--background-4: var(--vscode-badge-background);
+
+	/* From darkest to lightest */
+	--shadow-1: rgba(0, 0, 0, 20%);
+	--shadow-2: rgba(2, 1, 1, 0.1);
+	--shadow-3: rgba(26, 13, 13, 0.05);
+
+	/* Other */
+	--border: var(--background-4);
+	--focus: var(--vscode-focusBorder);
+	--focus-dark: var(--vscode-quickInputList-focusBackground);
+	--semantic-good: hsl(104, 44%, 48%);
+	--semantic-good-dark: hsl(104, 44%, 30%);
+	--semantic-warning: orange;
+	--semantic-bad: hsl(15, 100%, 43%);
+	--semantic-bad-dark: hsla(9, 100%, 56%, 0.3);
+
+	--ck-color-base-action: hsl(104, 44%, 48%);
+
+	/* -- Generic colors ------------------------------------------------------------------------ */
+
+	/* Blue ring around focussed objects */
+	--ck-color-base-focus: var(--focus);
+	/* Background color of selected item in dropdown menu */
+	--ck-color-base-active: var(--background-2);
+	/* Background color of selected item in dropdown menu when focussed */
+	--ck-color-base-active-focus: var(--background-2);
+	--ck-color-base-error: var(--semantic-bad);
+	--ck-color-base-text: var(--foreground);
+	--ck-color-base-foreground: var(--background-2);
+	--ck-color-base-background: var(--background-1);
+	--ck-color-base-border: var(--border);
+
+	--ck-color-focus-border-coordinates: 208, 79%, 51%;
+	--ck-color-focus-border: var(--ck-color-base-focus);
+	--ck-color-focus-outer-shadow: var(--shadow-2);
+	--ck-color-focus-disabled-shadow: var(--shadow-3);
+	--ck-color-focus-error-shadow: var(--semantic-bad-dark);
+	--ck-color-text: var(--ck-color-base-text);
+	--ck-color-shadow-drop: var(--shadow-2);
+	--ck-color-shadow-drop-active: var(--shadow-3);
+	--ck-color-shadow-inner: var(--shadow-1);
+
+	/* -- Buttons ------------------------------------------------------------------------------- */
+
+	--ck-color-button-default-background: transparent;
+	--ck-color-button-default-hover-background: var(--background-3);
+	--ck-color-button-default-active-background: var(--background-1);
+	--ck-color-button-default-active-shadow: var(--shadow-3);
+	--ck-color-button-default-disabled-background: transparent;
+
+	--ck-color-button-on-background: var(--background-4);
+	--ck-color-button-on-hover-background: var(--background-3);
+	--ck-color-button-on-active-background: var(--background-3);
+	--ck-color-button-on-active-shadow: var(--shadow-1);
+	--ck-color-button-on-disabled-background: var(--background-1);
+
+	--ck-color-button-action-background: var(--ck-color-base-action);
+	--ck-color-button-action-hover-background: var(--semantic-good);
+	--ck-color-button-action-active-background: var(--semantic-good);
+	--ck-color-button-action-active-shadow: var(--semantic-good-dark);
+	--ck-color-button-action-disabled-background: var(--semantic-good);
+	--ck-color-button-action-text: var(--background-1);
+
+	--ck-color-button-save: var(--semantic-good);
+	--ck-color-button-cancel: var(--semantic-bad);
+
+	--ck-color-switch-button-off-background: var(--background-3);
+	--ck-color-switch-button-off-hover-background: var(--background-4);
+	--ck-color-switch-button-on-background: var(--ck-color-button-action-background);
+	--ck-color-switch-button-on-hover-background: var(--semantic-good);
+	--ck-color-switch-button-inner-background: var(--background-1);
+	--ck-color-switch-button-inner-shadow: var(--shadow-1);
+
+	--ck-color-split-button-hover-background: var(--background-1);
+	--ck-color-split-button-hover-border: var(--border);
+
+	/* -- Dropdown ------------------------------------------------------------------------------ */
+
+	--ck-color-dropdown-panel-background: var(--background-1);
+	--ck-color-dropdown-panel-border: var(--border);
+
+	/* -- Input --------------------------------------------------------------------------------- */
+
+	--ck-color-input-background: var(--background-1);
+	--ck-color-input-border: var(--border);
+	--ck-color-input-error-border: var(--ck-color-base-error);
+	--ck-color-input-text: var(--ck-color-base-text);
+	--ck-color-input-disabled-background: var(--background-1);
+	--ck-color-input-disabled-border: var(--background-2);
+	--ck-color-input-disabled-text: var(--background-3);
+
+	/* -- List ---------------------------------------------------------------------------------- */
+
+	--ck-color-list-background: var(--background-1);
+	--ck-color-list-button-hover-background: var(--background-3);
+	--ck-color-list-button-on-background: var(--background-2);
+	--ck-color-list-button-on-background-focus: var(--background-4);
+	--ck-color-list-button-on-text: var(--foreground-1);
+
+	/* -- Panel --------------------------------------------------------------------------------- */
+
+	--ck-color-panel-background: var(--background-1);
+	--ck-color-panel-border: var(--border);
+
+	/* -- Toolbar ------------------------------------------------------------------------------- */
+
+	--ck-color-toolbar-background: var(--background-2);
+	--ck-color-toolbar-border: var(--border);
+
+	/* -- Tooltip ------------------------------------------------------------------------------- */
+
+	--ck-color-tooltip-background: var(--ck-color-base-text);
+	--ck-color-tooltip-text: var(--background-1);
+
+	/* -- Engine -------------------------------------------------------------------------------- */
+
+	--ck-color-engine-placeholder-text: hsl(0, 0%, 44%);
+
+	/* -- Upload -------------------------------------------------------------------------------- */
+
+	--ck-color-upload-bar-background: hsl(209, 92%, 70%);
+
+	/* -- Link -------------------------------------------------------------------------------- */
+
+	--ck-color-link-default: hsl(240, 100%, 47%);
+	--ck-color-link-selected-background: hsla(201, 100%, 56%, 0.1);
+	--ck-color-link-fake-selection: hsla(201, 100%, 56%, 0.3);
+
+	/* Editor ------------------------------------------------------------------------------------ */
+
+	--ck-color-editable-blur-selection: var(--background-4);
+}
