@@ -91,7 +91,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 	private getHtmlForWebview(webview: vscode.Webview): string {
 		// Local path to script and css for the webview
 		const initScriptUri = webview.asWebviewUri(
-			vscode.Uri.joinPath(this.context.extensionUri, 'src', 'markdownEditorInitScript.js')
+			vscode.Uri.joinPath(this.context.extensionUri, 'media', 'markdownEditorInitScript.js')
 		);
 		const ckeditorUri = webview.asWebviewUri(
 			vscode.Uri.joinPath(
@@ -110,7 +110,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			</head>
 			<body>
 				<div id="editor">
-					<p>Here goes the initial content of the editor.</p>
+					<p>CKEditor not initialized.</p>
 				</div>
 				
 				<script src="${ckeditorUri}"></script>

@@ -2,6 +2,15 @@
 
 :root {
 	font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto;
+	--ck-inner-shadow: none;
+}
+
+::selection {
+	background: var(--vscode-editor-inactiveSelectionBackground);
+}
+
+:focus ::selection {
+	background: var(--vscode-editor-selectionBackground);
 }
 
 h1,
@@ -16,11 +25,6 @@ h6 {
 a {
 	color: var(--link-color);
 }
-
-textarea {
-	background-color: var(--background-1);
-}
-
 table,
 th,
 td {
@@ -28,8 +32,14 @@ td {
 	border: 1px solid var(--foreground);
 }
 
+:root,
+textarea {
+	color: var(--foreground);
+	background-color: var(--background-1);
+	font-size: var(--vscode-editor-font-size);
+}
 :root {
-	background-color: var(--background-1) !important;
+	background-color: var(--background-1);
 	/* https://github.com/ckeditor/ckeditor5/issues/9676#issuecomment-847241075 */
 	--height: 100%;
 	--width: 100%;
@@ -46,9 +56,6 @@ html {
 	margin: 0;
 	height: 100%;
 	width: 100%;
-
-	color: var(--foreground);
-	font-size: var(--vscode-editor-font-size);
 }
 
 .container {
@@ -78,10 +85,37 @@ html {
 	max-height: 100%;
 }
 
-.ck-content,
+/* Make source editor fullscreen scrollable */
+.ck-source-editing-area,
+.ck-source-editing-area > textarea {
+	height: 100%;
+	max-height: 100%;
+}
+.ck-source-editing-area > textarea {
+	overflow-y: scroll;
+}
+
+/* Remove borders */
+.ck-editor__main > .ck-content,
+.ck-source-editing-area > textarea,
 .ck-toolbar {
 	border: none !important;
 }
+
+/* 
+
+Toolbar
+.ck-editor > .ck-editor__top > .ck-sticky-panel__content > .ck-toolbar > .ck-toolbar__items
+
+Editor body
+.ck-editor > .ck-editor__main > .ck-content
+
+Editor body in Source mode
+.ck-editor > .ck-editor__main > .ck-source-editing-area > textarea
+
+
+
+ */
 
 /* -------------------------- Colors -------------------------- */
 

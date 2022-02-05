@@ -16,6 +16,9 @@ npm start
 *   Add autolink to CKE editor
 *   Improve loadtimes using [https://code.visualstudio.com/api/extension-guides/webview#retaincontextwhenhidden](https://code.visualstudio.com/api/extension-guides/webview#retaincontextwhenhidden)
 
+# Notes
+ - `.vscodeignore` defines everything needed for the build.
+
 # Template Readme
 
 # Webpack & Extensions
