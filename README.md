@@ -1,8 +1,14 @@
+# Scripts
+
 npm install -g vsce
 
 (cd ./ckeditor5-build-markdown && npm run build)
 
 vsce package && code --install-extension markdown-editor-0.0.1.vsix
+
+cd ckeditor5-build-markdown
+
+npm start
 
 # TODO
 

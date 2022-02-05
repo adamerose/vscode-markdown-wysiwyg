@@ -1,3 +1,5 @@
+// https://webpack.js.org/configuration/dev-server/
+
 const path = require('path');
 const webpack = require('webpack');
 const { bundler, styles } = require('@ckeditor/ckeditor5-dev-utils');
@@ -26,6 +28,12 @@ module.exports = {
 			// eg. /src/ckeditor.js will be served at /ckeditor.js
 			{
 				directory: path.join(__dirname, 'src'),
+				watch: true,
+				publicPath: '/',
+				serveIndex: true,
+			},
+			{
+				directory: path.join(__dirname, 'sample'),
 				watch: true,
 				publicPath: '/',
 				serveIndex: true,
