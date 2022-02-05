@@ -1,3 +1,4 @@
+import { time } from 'console';
 import * as vscode from 'vscode';
 
 export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
@@ -5,7 +6,10 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		const provider = new MarkdownEditorProvider(context);
 		const providerRegistration = vscode.window.registerCustomEditorProvider(
 			MarkdownEditorProvider.viewType,
-			provider
+			provider,
+			{
+				webviewOptions: { retainContextWhenHidden: true },
+			}
 		);
 		return providerRegistration;
 	}
@@ -19,7 +23,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 	private document: vscode.TextDocument | undefined;
 
 	// Called when our custom editor is opened.
-	public async resolveCustomTextEditor(
+	public async resolveCustomTextEditor( 
 		document: vscode.TextDocument,
 		webviewPanel: vscode.WebviewPanel,
 		_token: vscode.CancellationToken
@@ -86,14 +90,9 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 	// Get the static html used for the editor webviews.
 	private getHtmlForWebview(webview: vscode.Webview): string {
 		// Local path to script and css for the webview
-		const scriptUri = webview.asWebviewUri(
-			vscode.Uri.joinPath(this.context.extensionUri, 'media', 'markdownEditorInitScript.js')
+		const initScriptUri = webview.asWebviewUri(
+			vscode.Uri.joinPath(this.context.extensionUri, 'src', 'markdownEditorInitScript.js')
 		);
-
-		const cssUri = webview.asWebviewUri(
-			vscode.Uri.joinPath(this.context.extensionUri, 'media', 'markdownEditorStyles.css')
-		);
-
 		const ckeditorUri = webview.asWebviewUri(
 			vscode.Uri.joinPath(
 				this.context.extensionUri,
@@ -119,16 +118,15 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 					MarkdownEditor
 					.create( document.querySelector( '#editor' ) )
 					.then( editor => {
-						window.editor = editor
+						window.editor = editor;
+						editor.timeLastModified = new Date();
 						console.log( "CKEditor instance:", JSON.stringify(editor ));
 					} )
 					.catch( error => {
 						console.error("CKEditor Initialization Error:",  error );
 					} );
 				</script>
-				<!-- CKEditor CSS override has to go after import script -->
-				<link href="${cssUri}" rel="stylesheet" />
-				<script src="${scriptUri}"></script>
+				<script src="${initScriptUri}"></script>
 			</body>
 			</html>`;
 	}

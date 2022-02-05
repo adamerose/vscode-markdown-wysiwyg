@@ -3,6 +3,7 @@ import ClassicEditorBase from '@ckeditor/ckeditor5-editor-classic/src/classicedi
 import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
 import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage';
+import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
@@ -43,6 +44,7 @@ MarkdownEditor.builtinPlugins = [
 	Alignment,
 	Autoformat,
 	AutoImage,
+	AutoLink,
 	BlockQuote,
 	Bold,
 	Code,
@@ -107,14 +109,11 @@ MarkdownEditor.defaultConfig = {
 			'bulletedList',
 			'numberedList',
 			'|',
-			'horizontalLine',
 			'blockQuote',
 			'insertImage',
 			'insertTable',
 			'codeBlock',
-			'|',
-			'undo',
-			'redo',
+			'horizontalLine',
 			'|',
 			'sourceEditing',
 		],

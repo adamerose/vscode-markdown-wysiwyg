@@ -23,12 +23,7 @@ module.exports = {
 	},
 	devServer: {
 		static: [
-			{
-				directory: path.join(__dirname, 'sample'),
-				watch: true,
-				publicPath: '/',
-				serveIndex: true,
-			},
+			// eg. /src/ckeditor.js will be served at /ckeditor.js
 			{
 				directory: path.join(__dirname, 'src'),
 				watch: true,

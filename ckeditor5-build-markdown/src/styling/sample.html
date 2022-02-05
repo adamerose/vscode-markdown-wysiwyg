@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link href="./sample-colors.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div id="editor"></div>
+
+		<script src="../ckeditor5-build-markdown/build/ckeditor.js"></script>
+		<script src="./sample-markdown-data.js"></script>
+		<script>
+			MarkdownEditor.create(document.querySelector('#editor'))
+				.then((editor) => {
+					console.log(editor);
+					editor.setData(data);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		</script>
+	</body>
+</html>
