@@ -1,5 +1,36 @@
 @@ -1,219 +0,0 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans');
+
 :root {
+	font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-weight: inherit;
+}
+
+a {
+	color: var(--link-color);
+}
+
+textarea {
+	background-color: var(--background-1);
+}
+
+table,
+th,
+td {
+	border-collapse: collapse;
+	border: 1px solid var(--foreground);
+}
+
+:root {
+	background-color: var(--background-1) !important;
 	/* https://github.com/ckeditor/ckeditor5/issues/9676#issuecomment-847241075 */
 	--height: 100%;
 	--width: 100%;
@@ -42,13 +73,13 @@ html {
 }
 
 /* Another div nested inside .ck-editor__main */
-.ck-editor__main > .ck-editor__editable {
+.ck-editor__main > .ck-content {
 	overflow-y: scroll;
 	height: 100%;
 	max-height: 100%;
 }
 
-.ck-editor__editable,
+.ck-content,
 .ck-toolbar {
 	border: none !important;
 }
@@ -56,25 +87,6 @@ html {
 /* -------------------------- Colors -------------------------- */
 
 :root {
-	/* Uncomment to do manual style override */
-	/* --vscode-editor-background: #1e1e1e;
-	--vscode-editorWidget-background: #252526;
-	--vscode-activityBar-background: #333333;
-	--vscode-dropdown-background: #3c3c3c;
-	--vscode-list-dropBackground: #383b3d;
-	--vscode-badge-background: #4d4d4d;
-
-	--vscode-button-foreground: #ffffff;
-	--vscode-dropdown-foreground: #f0f0f0;
-	--vscode-editor-foreground: #d4d4d4;
-	--vscode-menu-foreground: #cccccc;
-	--vscode-icon-foreground: #c5c5c5;
-
-	--vscode-widget-shadow: #0000005c;
-
-	--vscode-focusBorder: #007fd4;
-	--vscode-quickInputList-focusBackground: #062f4a; */
-
 	/*  Main theming variables ----------------------------------------------------------------- */
 	/* This is the base color for all text and icons outside the editor body */
 	--foreground: var(--vscode-editor-foreground);
