@@ -1,14 +1,14 @@
 {
 	"name": "markdown-editor",
-	"displayName": "Markdown WYSIWYG Editor",
-	"description": "A WYSIWYG Editor for markdown files",
-	"version": "0.0.1",
+	"displayName": "Markdown Editor",
+	"description": "A powerful WYSIWYG editor for markdown files",
+	"version": "0.1.0",
 	"publisher": "adrotog",
 	"private": true,
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Microsoft/vscode-extension-samples"
+		"url": "https://github.com/adrotog/vscode-markdown-editor"
 	},
 	"engines": {
 		"vscode": "^1.32.0"
@@ -17,23 +17,75 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCustomEditor:markdownEditorExtension.markdown"
+		"onCustomEditor:markdownEditor.customEditor",
+		"onCommand:markdownEditor.openCustomEditor"
 	],
 	"main": "./dist/extension",
 	"contributes": {
 		"customEditors": [
 			{
-				"viewType": "markdownEditorExtension.markdown",
+				"viewType": "markdownEditor.customEditor",
 				"displayName": "Markdown WYSIWYG Editor",
 				"selector": [
 					{
 						"filenamePattern": "*.md"
 					}
 				],
-				"priority": "default"
+				"priority": "option"
 			}
 		],
-		"commands": []
+		"commands": [
+			{
+				"command": "markdownEditor.openCustomEditor",
+				"title": "Open WYSIWYG Editor",
+				"icon": "$(preview)"
+			},
+			{
+				"command": "markdownEditor.openDefaultEditor",
+				"title": "Open Default Editor",
+				"icon": "$(note)"
+			},
+			{
+				"command": "markdownEditor.DEBUG",
+				"title": "DEBUG",
+				"icon": "$(alert)"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"when": "resourceExtname == .md",
+					"command": "markdownEditor.openCustomEditor",
+					"group": "navigation"
+				}
+			],
+			"editor/title": [
+				{
+					"command": "markdownEditor.openCustomEditor",
+					"group": "navigation",
+					"when": "resourceLangId == markdown && !markdownEditor.editorIsActive"
+				},
+				{
+					"command": "markdownEditor.openDefaultEditor",
+					"group": "navigation",
+					"when": "resourceLangId == markdown && markdownEditor.editorIsActive"
+				}
+			]
+		},
+		"keybindings": [
+			{
+				"command": "markdownEditor.openCustomEditor",
+				"key": "ctrl+shift+e",
+				"mac": "cmd+shift+e",
+				"when": "resourceLangId == markdown && !markdownEditor.editorIsActive"
+			},
+			{
+				"command": "markdownEditor.openDefaultEditor",
+				"key": "ctrl+shift+e",
+				"mac": "cmd+shift+e",
+				"when": "resourceLangId == markdown && markdownEditor.editorIsActive"
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "webpack --mode production",

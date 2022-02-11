@@ -1,5 +1,6 @@
 import { time } from 'console';
 import * as vscode from 'vscode';
+import { extensionState } from './extension';
 
 export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 	public static register(context: vscode.ExtensionContext): vscode.Disposable {
@@ -14,21 +15,35 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		return providerRegistration;
 	}
 
-	private static readonly viewType = 'markdownEditorExtension.markdown';
+	static readonly viewType = 'markdownEditor.customEditor';
 
 	constructor(private readonly context: vscode.ExtensionContext) {}
 
 	private editQueue: Array<vscode.WorkspaceEdit> = [];
 	private editQueueRunning = false;
-	private document: vscode.TextDocument | undefined;
 
 	// Called when our custom editor is opened.
-	public async resolveCustomTextEditor( 
+	public async resolveCustomTextEditor(
 		document: vscode.TextDocument,
 		webviewPanel: vscode.WebviewPanel,
 		_token: vscode.CancellationToken
 	): Promise<void> {
-		this.document = document;
+		function handleFocusChange() {
+			const isActive = webviewPanel.active;
+
+			console.log('handleFocusChange', [isActive, document.fileName]);
+
+			vscode.commands.executeCommand('setContext', 'markdownEditor.editorIsActive', isActive);
+			extensionState.document = document;
+		}
+
+		// Update extension state when user changes focus to my custom editor
+		webviewPanel.onDidChangeViewState((e) => {
+			handleFocusChange();
+		});
+		// Apparently onDidChangeViewState doesn't occur on first load, so trigger it manually now
+		handleFocusChange();
+
 		console.log('Initializing Custom Editor for:', [JSON.stringify(document.fileName)]);
 
 		// Setup initial content for the webview
@@ -137,8 +152,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 	private updateTextDocument(document: vscode.TextDocument, text: any) {
 		// Standardize text EOL character to match document
 		// https://code.visualstudio.com/api/references/vscode-api#EndOfLine
-		console.log(this.document?.eol);
-		if (this.document?.eol == 2) {
+		if (document?.eol == 2) {
 			text = text.replace(/(?:\r\n|\r|\n)/g, '\r\n');
 		} else {
 			text = text.replace(/(?:\r\n|\r|\n)/g, '\n');
@@ -146,7 +160,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 
 		console.log('VS Code started updateTextDocument', [JSON.stringify(text)]);
 
-		if (text != this.document?.getText()) {
+		if (text != document?.getText()) {
 			// Just replace the entire document every time for this example extension.
 			// A more complete extension should compute minimal edits instead.
 			const newEdit = new vscode.WorkspaceEdit();

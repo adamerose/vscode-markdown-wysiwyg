@@ -10,6 +10,8 @@ cd ckeditor5-build-markdown
 
 npm start
 
+https://github.com/microsoft/vscode/issues/91473
+
 # TODO
 
 *   Fix bugginess of file modified indicator
@@ -17,7 +19,8 @@ npm start
 *   Improve loadtimes using [https://code.visualstudio.com/api/extension-guides/webview#retaincontextwhenhidden](https://code.visualstudio.com/api/extension-guides/webview#retaincontextwhenhidden)
 
 # Notes
- - `.vscodeignore` defines everything needed for the build.
+
+*   `.vscodeignore` defines everything needed for the build.
 
 # Template Readme
 
@@ -47,4 +50,8 @@ If you use `vscode-nls` to localize your extension that you likely also use `vsc
 }
 ```
 
-A good sample is the shared config built-in extensions use: [https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51](https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51)
+A good sample is the shared config built-in extensions use: [https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51](https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51)}
+
+\`\`\`
+
+A good sample is the shared config built-in extensions use: [https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51](https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51)A good sample is the shared config built-in extensions use: [https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51](https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51)
