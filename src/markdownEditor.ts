@@ -29,6 +29,8 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		_token: vscode.CancellationToken
 	): Promise<void> {
 		this.document = document;
+		console.log('Initializing Custom Editor for:', [JSON.stringify(document.fileName)]);
+
 		// Setup initial content for the webview
 		webviewPanel.webview.options = {
 			enableScripts: true,
@@ -41,7 +43,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			// Change EOL to \n because that's what CKEditor5 uses internally
 			text = text.replace(/(?:\r\n|\r|\n)/g, '\n');
 
-			console.log('VS Code sent message: documentChanged', JSON.stringify(text));
+			console.log('VS Code sent message: documentChanged', [JSON.stringify(text)]);
 			webviewPanel.webview.postMessage({
 				type: 'documentChanged',
 				text: text,
@@ -62,7 +64,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		});
 
 		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument((e) => {
-			console.log('onDidChangeTextDocument: ', JSON.stringify(e.document.getText()));
+			console.log('onDidChangeTextDocument: ', [JSON.stringify(e.document.getText())]);
 		});
 
 		// Make sure we get rid of the listener when our editor is closed.
@@ -76,7 +78,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel.webview.onDidReceiveMessage((e) => {
 			switch (e.type) {
 				case 'webviewChanged':
-					console.log('VS Code recieved message: webviewChanged', JSON.stringify(e.text));
+					console.log('VS Code recieved message: webviewChanged', [JSON.stringify(e.text)]);
 					this.updateTextDocument(document, e.text);
 					return;
 				case 'initialized':
@@ -120,7 +122,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 					.then( editor => {
 						window.editor = editor;
 						editor.timeLastModified = new Date();
-						console.log( "CKEditor instance:", JSON.stringify(editor ));
+						console.log( "CKEditor instance:", [JSON.stringify(editor )]);
 					} )
 					.catch( error => {
 						console.error("CKEditor Initialization Error:",  error );
@@ -142,7 +144,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			text = text.replace(/(?:\r\n|\r|\n)/g, '\n');
 		}
 
-		console.log('VS Code started updateTextDocument', JSON.stringify(text));
+		console.log('VS Code started updateTextDocument', [JSON.stringify(text)]);
 
 		if (text != this.document?.getText()) {
 			// Just replace the entire document every time for this example extension.
@@ -162,15 +164,15 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		const edit = queue.shift();
 		if (edit != undefined) {
 			const text = (edit as any)._edits[0].edit._newText;
-			console.log('VS Code started applyEdit', JSON.stringify(text));
+			console.log('VS Code started applyEdit', [JSON.stringify(text)]);
 			vscode.workspace.applyEdit(edit).then(
 				() => {
-					console.log('VS Code finished applyEdit', JSON.stringify(text));
+					console.log('VS Code finished applyEdit', [JSON.stringify(text)]);
 
 					this.processEditQueue(queue);
 				},
 				() => {
-					console.log('VS Code failed applyEdit', JSON.stringify(text));
+					console.log('VS Code failed applyEdit', [JSON.stringify(text)]);
 				}
 			);
 		} else {

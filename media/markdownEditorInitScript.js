@@ -35,7 +35,7 @@ function waitFor(condition, callback) {
  * Render the document in the webview.
  */
 function updateContent(/** @type {string} */ text) {
-	console.log('updateContent', JSON.stringify(text));
+	console.log('updateContent', [JSON.stringify(text)]);
 	try {
 		// TODO: Check if text is valid markdown
 	} catch {
@@ -47,14 +47,14 @@ function updateContent(/** @type {string} */ text) {
 		editor.setData(text);
 	}
 
-	console.log('getData', JSON.stringify(editor.getData()));
+	console.log('getData', [JSON.stringify(editor.getData())]);
 }
 
 // Add listener for user modifying text in the editor
 editor.model.document.on('change:data', (e) => {
 	const data = editor.getData();
 
-	console.log('postMessage (webviewChanged)', JSON.stringify(data));
+	console.log('postMessage (webviewChanged)', [JSON.stringify(data)]);
 	editor.timeLastModified = new Date();
 	vscode.postMessage({
 		type: 'webviewChanged',
@@ -64,7 +64,7 @@ editor.model.document.on('change:data', (e) => {
 
 // Handle messages sent from the extension to the webview
 window.addEventListener('message', (event) => {
-	console.log('Recieved Message', JSON.stringify(event.data));
+	console.log('Recieved Message', [JSON.stringify(event.data)]);
 	const message = event.data; // The data that the extension sent
 	switch (message.type) {
 		case 'documentChanged':
