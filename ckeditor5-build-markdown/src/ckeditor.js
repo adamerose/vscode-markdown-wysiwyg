@@ -26,7 +26,7 @@ import List from '@ckeditor/ckeditor5-list/src/list';
 import Markdown from '@ckeditor/ckeditor5-markdown-gfm/src/markdown';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
-import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
+// import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
 import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
 import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
 import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
@@ -65,7 +65,7 @@ MarkdownEditor.builtinPlugins = [
 	Markdown,
 	Paragraph,
 	PasteFromOffice,
-	SourceEditing,
+	// SourceEditing,
 	Strikethrough,
 	Subscript,
 	Superscript,
@@ -114,8 +114,8 @@ MarkdownEditor.defaultConfig = {
 			'insertTable',
 			'codeBlock',
 			'horizontalLine',
-			'|',
-			'sourceEditing',
+			// '|',
+			// 'sourceEditing',
 		],
 	},
 	image: {
