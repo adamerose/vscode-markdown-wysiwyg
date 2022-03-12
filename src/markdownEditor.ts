@@ -28,29 +28,36 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel: vscode.WebviewPanel,
 		_token: vscode.CancellationToken
 	): Promise<void> {
+		// Update global state when a webview is focused.
 		function handleFocusChange() {
+			// This is used in the contibution point "when" clauses indicating which icons and hotkeys to activate
 			const isActive = webviewPanel.active;
-
-			console.log('handleFocusChange', [isActive, document.fileName]);
-
 			vscode.commands.executeCommand('setContext', 'markdownEditor.editorIsActive', isActive);
+
+			// This is used to keep track of the active editor's document, since with a
+			// CustomTextEditor, vscode.window.activeTextEditor is always undefined
 			extensionState.document = document;
 		}
 
-		// Update extension state when user changes focus to my custom editor
 		webviewPanel.onDidChangeViewState((e) => {
 			handleFocusChange();
 		});
-		// Apparently onDidChangeViewState doesn't occur on first load, so trigger it manually now
+
+		// onDidChangeViewState doesn't occur on first load, so trigger it manually now
 		handleFocusChange();
 
-		console.log('Initializing Custom Editor for:', [JSON.stringify(document.fileName)]);
-
-		// Setup initial content for the webview
-		webviewPanel.webview.options = {
-			enableScripts: true,
-		};
+		// Setup initial webview HTML and settings
+		webviewPanel.webview.options = { enableScripts: true };
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
+
+		////////////////////////////////////////////////////////////////////////////////////////
+		// Hook up event handlers so that we can synchronize the webview with the text document.
+		//
+		// The text document acts as our model, so we have to sync changes in the document to our
+		// editor and sync changes in the editor back to the document.
+		//
+		// Remember that a single text document can also be shared between multiple custom
+		// editors (this happens for example when you split a custom editor)
 
 		function updateWebview() {
 			let text = document.getText();
@@ -58,28 +65,17 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			// Change EOL to \n because that's what CKEditor5 uses internally
 			text = text.replace(/(?:\r\n|\r|\n)/g, '\n');
 
-			console.log('VS Code sent message: documentChanged', [JSON.stringify(text)]);
-			webviewPanel.webview.postMessage({
-				type: 'documentChanged',
-				text: text,
-			});
+			console.log('Changed Document', [JSON.stringify(text)]);
+			webviewPanel.webview.postMessage({ type: 'documentChanged', text: text });
 		}
 
-		// Hook up event handlers so that we can synchronize the webview with the text document.
-		//
-		// The text document acts as our model, so we have to sync change in the document to our
-		// editor and sync changes in the editor back to the document.
-		//
-		// Remember that a single text document can also be shared between multiple custom
-		// editors (this happens for example when you split a custom editor)
-
 		const saveDocumentSubscription = vscode.workspace.onDidSaveTextDocument((e) => {
-			console.log('onDidSaveTextDocument');
+			console.log('Saved Document');
 			updateWebview();
 		});
 
 		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument((e) => {
-			console.log('onDidChangeTextDocument: ', [JSON.stringify(e.document.getText())]);
+			console.log('Changed Document: ', [JSON.stringify(e.document.getText())]);
 		});
 
 		// Make sure we get rid of the listener when our editor is closed.
@@ -93,11 +89,9 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel.webview.onDidReceiveMessage((e) => {
 			switch (e.type) {
 				case 'webviewChanged':
-					console.log('VS Code recieved message: webviewChanged', [JSON.stringify(e.text)]);
 					this.updateTextDocument(document, e.text);
 					return;
 				case 'initialized':
-					console.log('VS Code recieved message: initialized');
 					updateWebview();
 					return;
 			}
@@ -152,11 +146,8 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 	private updateTextDocument(document: vscode.TextDocument, text: any) {
 		// Standardize text EOL character to match document
 		// https://code.visualstudio.com/api/references/vscode-api#EndOfLine
-		if (document?.eol == 2) {
-			text = text.replace(/(?:\r\n|\r|\n)/g, '\r\n');
-		} else {
-			text = text.replace(/(?:\r\n|\r|\n)/g, '\n');
-		}
+		const eol_chars = document?.eol == 2 ? '\r\n' : '\n';
+		text = text.replace(/(?:\r\n|\r|\n)/g, eol_chars);
 
 		console.log('VS Code started updateTextDocument', [JSON.stringify(text)]);
 

@@ -2,12 +2,12 @@
 // We use this API to post messages back to our extension.
 
 // This was defined in markdownEditor.ts in the HTML snippet initializing CKEditor5. This line just stops IDE complaining.
-// @ts-ignore
 const editor = window.editor;
 editor.timeLastModified = new Date();
 
-// @ts-ignore
+// eslint-disable-next-line no-undef
 const vscode = acquireVsCodeApi();
+window.vscode = vscode;
 
 editor.debounceActive = false;
 const debounceDelay = 5;
@@ -67,7 +67,7 @@ window.addEventListener('message', (event) => {
 	console.log('Recieved Message', [JSON.stringify(event.data)]);
 	const message = event.data; // The data that the extension sent
 	switch (message.type) {
-		case 'documentChanged':
+		case 'documentChanged': {
 			const text = message.text;
 
 			const data = editor.getData();
@@ -81,6 +81,7 @@ window.addEventListener('message', (event) => {
 			} else {
 				console.log('updateContent skipped, data matches.');
 			}
+		}
 	}
 });
 

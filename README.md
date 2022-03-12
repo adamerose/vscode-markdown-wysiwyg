@@ -1,26 +1,32 @@
 # Scripts
 
+```plaintext
 npm install -g vsce
 
 (cd ./ckeditor5-build-markdown && npm run build)
+vsce package
+code --install-extension markdown-editor-0.1.0.vsix
 
-vsce package && code --install-extension markdown-editor-0.0.1.vsix
-
-cd ckeditor5-build-markdown
-
-npm start
-
-https://github.com/microsoft/vscode/issues/91473
+(cd ./ckeditor5-build-markdown && npm start)
+```
 
 # TODO
 
 *   Fix bugginess of file modified indicator
 *   Add autolink to CKE editor
 *   Improve loadtimes using [https://code.visualstudio.com/api/extension-guides/webview#retaincontextwhenhidden](https://code.visualstudio.com/api/extension-guides/webview#retaincontextwhenhidden)
+*   Remove breadcrumb https://github.com/microsoft/vscode-extension-samples/issues/369#issuecomment-754231994
+*   Improve styling to be more like VS Code markdown preview
+*   Add code formatting
+    *   [https://github.com/ckeditor/ckeditor5/issues/1354](https://github.com/ckeditor/ckeditor5/issues/1354)
+    *   [https://github.com/ckeditor/ckeditor5/issues/6309](https://github.com/ckeditor/ckeditor5/issues/6309)
+*   Support pasting clipboard images like [https://github.com/telesoho/vscode-markdown-paste-image](https://github.com/telesoho/vscode-markdown-paste-image)
+    *   Will need this [https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/upload-adapter.html](https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/upload-adapter.html)
 
 # Notes
 
 *   `.vscodeignore` defines everything needed for the build.
+*   https://github.com/microsoft/vscode/issues/91473
 
 # Template Readme
 
