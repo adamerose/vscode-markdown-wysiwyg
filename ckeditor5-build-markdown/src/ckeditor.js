@@ -26,7 +26,7 @@ import List from '@ckeditor/ckeditor5-list/src/list';
 import Markdown from '@ckeditor/ckeditor5-markdown-gfm/src/markdown';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
-// import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
+import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
 import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
 import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
 import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
@@ -36,6 +36,7 @@ import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformatio
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 
 import './styles.css';
+// import './github-markdown.css';
 
 export default class MarkdownEditor extends ClassicEditorBase {}
 
@@ -65,7 +66,7 @@ MarkdownEditor.builtinPlugins = [
 	Markdown,
 	Paragraph,
 	PasteFromOffice,
-	// SourceEditing,
+	SourceEditing,
 	Strikethrough,
 	Subscript,
 	Superscript,
@@ -114,8 +115,8 @@ MarkdownEditor.defaultConfig = {
 			'insertTable',
 			'codeBlock',
 			'horizontalLine',
-			// '|',
-			// 'sourceEditing',
+			'|',
+			'sourceEditing',
 		],
 	},
 	image: {
@@ -133,6 +134,24 @@ MarkdownEditor.defaultConfig = {
 			{ model: 'heading4', view: 'h4', title: 'Heading 4' },
 			{ model: 'heading5', view: 'h5', title: 'Heading 5' },
 			{ model: 'heading6', view: 'h6', title: 'Heading 6' },
+		],
+	},
+	codeBlock: {
+		languages: [
+			{ language: '', label: 'Plain text' },
+			{ language: 'c', label: 'C' },
+			{ language: 'cs', label: 'C#' },
+			{ language: 'cpp', label: 'C++' },
+			{ language: 'css', label: 'CSS' },
+			{ language: 'diff', label: 'Diff' },
+			{ language: 'html', label: 'HTML' },
+			{ language: 'java', label: 'Java' },
+			{ language: 'javascript', label: 'JavaScript' },
+			{ language: 'php', label: 'PHP' },
+			{ language: 'python', label: 'Python' },
+			{ language: 'ruby', label: 'Ruby' },
+			{ language: 'typescript', label: 'TypeScript' },
+			{ language: 'xml', label: 'XML' },
 		],
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.

@@ -1,3 +1,14 @@
+## Tables
+
+| Option | Description |
+| --- | --- |
+| foo | Lorem ipsum dolor sit amet, |
+| bar | Ut enim ad minim veniam, quis nostrud exercitation ullamco. |
+| baz | Excepteur sint occaecat cupidatat non proident. |
+| foo | Lorem ipsum dolor sit amet, |
+| bar | Ut enim ad minim veniam, quis nostrud exercitation ullamco. |
+| baz | Excepteur sint occaecat cupidatat non proident. |
+
 ## Headings
 
 # h1 Heading
@@ -36,11 +47,19 @@ _This is italic text_
 > > 
 > > > ...or with spaces between arrows.
 
+## Links
+
+[example](https://example.com)
+
+[example link with hover](https://example.com)
+
+[https://example.com/](https://example.com/)
+
 ## Lists
 
 Unordered
 
-*   Create a list by starting a line with `+`, `-`, or `*`
+*   Create a list by starting a line with `+`, `-`, or `*`. Here is a longer `code snippet` and another one `npm install some-package`
 *   Sub-lists are made by indenting 2 spaces:
     *   Ac tristique libero volutpat at
     *   Facilisis in pretium nisl aliquet
@@ -57,7 +76,7 @@ Ordered
 
 Indented code
 
-```plaintext
+```
 line 1 of code
 line 2 of code
 line 3 of code
@@ -65,7 +84,7 @@ line 3 of code
 
 Block code with backticks
 
-```plaintext
+```
 line 1 of code
 line 2 of code
 line 3 of code
@@ -78,12 +97,6 @@ line 3 of code
 | foo | Lorem ipsum dolor sit amet, |
 | bar | Ut enim ad minim veniam, quis nostrud exercitation ullamco. |
 | baz | Excepteur sint occaecat cupidatat non proident. |
-
-## Links
-
-[example](https://example.com)
-
-[example link with hover](https://example.com)
 
 ## Images
 

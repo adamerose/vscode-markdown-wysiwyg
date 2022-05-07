@@ -1,6 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans');
 
-:root {
+/* -------------------------- Aesthetics -------------------------- */
+
+body,
+html {
+	padding: 0;
+	margin: 0;
+	height: 100%;
+	width: 100%;
+	color: var(--foreground-1);
+	background-color: var(--background-1);
+	font-size: var(--vscode-editor-font-size);
+
 	font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto;
 	--ck-inner-shadow: none;
 }
@@ -12,58 +23,131 @@
 :focus ::selection {
 	background: var(--vscode-editor-selectionBackground);
 }
+:root {
+	--ck-table-selected-cell-background: rgba(158, 207, 250, 0.3);
+}
 
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+ol,
+ul,
+pre {
 	font-weight: inherit;
+	margin: 0.5em 0;
+}
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: var(--background-4);
+	font-weight: normal;
 }
 
+/* Blockquotes */
+
+.ck-content blockquote {
+	background: var(--vscode-textBlockQuote-background);
+	border-color: var(--background-4);
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+/* Code blocks */
+
+.ck-content pre {
+	font-family: var(--vscode-editor-font-family);
+	background-color: var(--vscode-textCodeBlock-background);
+	border: none;
+	padding: 16px;
+	margin: 0 0 0 14px;
+}
+
+.ck-content code,
+.ck-code_selected,
+.ck.ck-editor__editable .ck-code_selected {
+	font-family: var(--vscode-editor-font-family);
+	color: var(--foreground-1);
+	background-color: var(--background-3);
+	padding: 0px 5px;
+}
+
+/* Inline code snippets */
+
+.ck.ck-editor__editable pre[data-language]:after {
+	color: var(--foreground-1);
+	background-color: transparent;
+	right: 1em;
+	top: 0.5em;
+}
+
+/* Links */
 a {
 	color: var(--link-color);
+	text-decoration: none;
 }
-table,
-th,
-td {
+a:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+/* Horizontal Rule */
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.ck-content hr {
+	height: 2px;
+	background: var(--background-4);
+	margin: 8px 0;
+}
+
+/* Tables */
+.ck-content .table table {
 	border-collapse: collapse;
-	border: 1px solid var(--foreground);
-}
-
-:root,
-textarea {
-	color: var(--foreground);
-	background-color: var(--background-1);
-	font-size: var(--vscode-editor-font-size);
-}
-:root {
-	background-color: var(--background-1);
-	/* https://github.com/ckeditor/ckeditor5/issues/9676#issuecomment-847241075 */
-	--height: 100%;
-	--width: 100%;
-}
-
-* {
-	/* This allows usage of height: 100% on elements with borders without causing scrollbars */
-	box-sizing: border-box;
-}
-
-body,
-html {
-	padding: 0;
-	margin: 0;
-	height: 100%;
+	border-spacing: 0;
 	width: 100%;
+	height: 100%;
+	border: 1px solid var(--background-3);
+}
+.ck-content .table {
+	margin: 10px 0px;
+	display: table;
+}
+.ck-content .table table td {
+	min-width: 2em;
+	padding: 5px 10px;
+	border: 1px solid var(--background-3);
 }
 
-.container {
-	height: var(--height);
-	width: var(--width);
+.ck-content .table table th {
+	min-width: 2em;
+	padding: 5px 10px;
+	border: 1px solid var(--background-3);
+	border-bottom: 1px solid var(--background-4);
 }
 
-/* Entire CKEditor5 div */
+/* -------------------------- CKEditor5 layout -------------------------- */
+/* 
+Note - These are the selector paths for various CKEditor5 elements:
+
+Toolbar:
+.ck-editor > .ck-editor__top > .ck-sticky-panel__content > .ck-toolbar > .ck-toolbar__items
+
+Editor body:
+.ck-editor > .ck-editor__main > .ck-content
+
+Editor body in Source mode:
+.ck-editor > .ck-editor__main > .ck-source-editing-area > textarea
+ */
+
 .ck-editor {
 	height: 100% !important;
 	max-height: 100% !important;
@@ -99,30 +183,21 @@ html {
 .ck-editor__main > .ck-content,
 .ck-source-editing-area > textarea,
 .ck-toolbar {
-	border: none !important;
+	border-width: 0 !important;
 }
 
-/* 
-
-Toolbar
-.ck-editor > .ck-editor__top > .ck-sticky-panel__content > .ck-toolbar > .ck-toolbar__items
-
-Editor body
-.ck-editor > .ck-editor__main > .ck-content
-
-Editor body in Source mode
-.ck-editor > .ck-editor__main > .ck-source-editing-area > textarea
-
-
-
- */
-
+.ck-editor__main > .ck-content {
+	border-top: 1px solid var(--background-3) !important;
+}
 /* -------------------------- Colors -------------------------- */
 
 :root {
 	/*  Main theming variables ----------------------------------------------------------------- */
 	/* This is the base color for all text and icons outside the editor body */
-	--foreground: var(--vscode-editor-foreground);
+	--foreground-1: var(--vscode-editor-foreground);
+	--foreground-2: var(--vscode-foreground);
+	--foreground-3: var(--vscode-editorCursor-foreground);
+
 	/* This is the background color for the editor body */
 	--background-1: var(--vscode-editor-background);
 	/* This is the background color for the toolbar */
@@ -149,6 +224,15 @@ Editor body in Source mode
 
 	--ck-color-base-action: hsl(104, 44%, 48%);
 
+	/* -- Non-color theming ------------------------------------------------------------------------ */
+
+	--vscode-font-family: 'Segoe WPC', 'Segoe UI', sans-serif;
+	--vscode-font-weight: normal;
+	--vscode-font-size: 13px;
+	--vscode-editor-font-family: Consolas, 'Courier New', monospace;
+	--vscode-editor-font-weight: normal;
+	--vscode-editor-font-size: 14px;
+
 	/* -- Generic colors ------------------------------------------------------------------------ */
 
 	/* Blue ring around focussed objects */
@@ -158,7 +242,7 @@ Editor body in Source mode
 	/* Background color of selected item in dropdown menu when focussed */
 	--ck-color-base-active-focus: var(--background-2);
 	--ck-color-base-error: var(--semantic-bad);
-	--ck-color-base-text: var(--foreground);
+	--ck-color-base-text: var(--foreground-1);
 	--ck-color-base-foreground: var(--background-2);
 	--ck-color-base-background: var(--background-1);
 	--ck-color-base-border: var(--border);
@@ -237,7 +321,8 @@ Editor body in Source mode
 
 	/* -- Toolbar ------------------------------------------------------------------------------- */
 
-	--ck-color-toolbar-background: var(--background-2);
+	--ck-color-toolbar-background: var(--background-1);
+	/* Originally --ck-color-toolbar-background: var(--background-2); */
 	--ck-color-toolbar-border: var(--border);
 
 	/* -- Tooltip ------------------------------------------------------------------------------- */
