@@ -2,7 +2,7 @@
 	"name": "markdown-editor",
 	"displayName": "Markdown Editor",
 	"description": "A fully featured WYSIWYG editor for markdown files",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"publisher": "adamerose",
 	"private": true,
 	"license": "MIT",
