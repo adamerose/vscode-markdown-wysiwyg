@@ -1,7 +1,7 @@
 {
 	"name": "markdown-editor",
 	"displayName": "Markdown Editor",
-	"description": "A powerful WYSIWYG editor for markdown files",
+	"description": "A fully featured WYSIWYG editor for markdown files",
 	"version": "0.2.0",
 	"publisher": "adamerose",
 	"private": true,
@@ -14,7 +14,14 @@
 		"vscode": "^1.32.0"
 	},
 	"categories": [
-		"Other"
+		"Programming Languages",
+		"Formatters"
+	],
+	"tags": [
+		"markdown",
+		"editor",
+		"wysiwyg",
+		"ckeditor"
 	],
 	"activationEvents": [
 		"onCustomEditor:markdownEditor.customEditor",
