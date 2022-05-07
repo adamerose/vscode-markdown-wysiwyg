@@ -28,27 +28,43 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		webviewPanel: vscode.WebviewPanel,
 		_token: vscode.CancellationToken
 	): Promise<void> {
-		// Update global state when a webview is focused.
-		function handleFocusChange() {
-			// This is used in the contibution point "when" clauses indicating which icons and hotkeys to activate
-			const isActive = webviewPanel.active;
-			vscode.commands.executeCommand('setContext', 'markdownEditor.editorIsActive', isActive);
-
-			// This is used to keep track of the active editor's document, since with a
-			// CustomTextEditor, vscode.window.activeTextEditor is always undefined
-			extensionState.document = document;
-		}
-
-		webviewPanel.onDidChangeViewState((e) => {
-			handleFocusChange();
-		});
-
-		// onDidChangeViewState doesn't occur on first load, so trigger it manually now
-		handleFocusChange();
-
 		// Setup initial webview HTML and settings
 		webviewPanel.webview.options = { enableScripts: true };
 		webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
+
+		// Update global state when a webview is focused.
+		function handleFocusChange(panel: vscode.WebviewPanel, initialLoadFlag = false) {
+			console.log('handleFocusChange', panel.active);
+			if (panel.active) {
+				extensionState.activeDocument = document;
+				extensionState.activeWebviewPanel = panel;
+				// This is used in the contibution point "when" clauses indicating which icons and hotkeys to activate
+				vscode.commands
+					.executeCommand('setContext', 'markdownEditor.editorIsActive', true)
+					.then(() => {
+						console.log('markdownEditor.editorIsActive', true);
+					});
+			} else if (!panel.active && panel === extensionState.activeWebviewPanel) {
+				vscode.commands
+					.executeCommand('setContext', 'markdownEditor.editorIsActive', false)
+					.then(() => {
+						console.log('markdownEditor.editorIsActive', false);
+					});
+			}
+
+			console.log(
+				`${initialLoadFlag ? '(Initial Load)' : '(onDidChangeViewState)'} Active: ${
+					panel.active
+				} - ${document?.uri.toString()}`
+			);
+		}
+
+		// We need to manually trigger this once inside of resolveCustomTextEditor since onDidChangeViewState does not run on initial load.
+		handleFocusChange(webviewPanel, true);
+
+		webviewPanel.onDidChangeViewState((e) => {
+			handleFocusChange(e.webviewPanel);
+		});
 
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Hook up event handlers so that we can synchronize the webview with the text document.
@@ -80,7 +96,15 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 
 		// Make sure we get rid of the listener when our editor is closed.
 		webviewPanel.onDidDispose(() => {
-			console.log('Disposed');
+			console.log('Disposed1');
+			if (extensionState.activeWebviewPanel === webviewPanel) {
+				vscode.commands
+					.executeCommand('setContext', 'markdownEditor.editorIsActive', false)
+					.then(() => {
+						console.log('markdownEditor.editorIsActive', false);
+					});
+			}
+			console.log('Disposed2');
 			changeDocumentSubscription.dispose();
 			saveDocumentSubscription.dispose();
 		});
@@ -121,7 +145,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			</head>
 			<body>
 				<div id="editor">
-					<p>CKEditor not initialized.</p>
+					
 				</div>
 				
 				<script src="${ckeditorUri}"></script>

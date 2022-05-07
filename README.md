@@ -5,7 +5,7 @@ npm install -g vsce
 
 (cd ./ckeditor5-build-markdown && npm run build)
 vsce package
-code --install-extension markdown-editor-0.1.0.vsix
+code --install-extension markdown-editor-0.2.0.vsix
 
 (cd ./ckeditor5-build-markdown && npm start)
 ```
@@ -15,13 +15,18 @@ code --install-extension markdown-editor-0.1.0.vsix
 *   Fix bugginess of file modified indicator
 *   Add autolink to CKE editor
 *   Improve loadtimes using [https://code.visualstudio.com/api/extension-guides/webview#retaincontextwhenhidden](https://code.visualstudio.com/api/extension-guides/webview#retaincontextwhenhidden)
-*   Remove breadcrumb https://github.com/microsoft/vscode-extension-samples/issues/369#issuecomment-754231994
+*   Remove breadcrumb 
+    *   [https://github.com/microsoft/vscode-extension-samples/issues/369#issuecomment-754231994](https://github.com/microsoft/vscode-extension-samples/issues/369#issuecomment-754231994)
+    *   [https://vscode-dev-community.slack.com/archives/C74CB59NE/p1644800862386389](https://vscode-dev-community.slack.com/archives/C74CB59NE/p1644800862386389)
 *   Improve styling to be more like VS Code markdown preview
 *   Add code formatting
     *   [https://github.com/ckeditor/ckeditor5/issues/1354](https://github.com/ckeditor/ckeditor5/issues/1354)
     *   [https://github.com/ckeditor/ckeditor5/issues/6309](https://github.com/ckeditor/ckeditor5/issues/6309)
 *   Support pasting clipboard images like [https://github.com/telesoho/vscode-markdown-paste-image](https://github.com/telesoho/vscode-markdown-paste-image)
     *   Will need this [https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/upload-adapter.html](https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/upload-adapter.html)
+    *   [https://vscode-dev-community.slack.com/archives/C74CB59NE/p1647204814315079](https://vscode-dev-community.slack.com/archives/C74CB59NE/p1647204814315079)
+*   TODO - Fix active editor not being correct in case where onDidChangeViewState doesn't fire on initialization.
+    *   [https://github.com/microsoft/vscode/issues/145648](https://github.com/microsoft/vscode/issues/145648)
 
 # Notes
 
@@ -59,5 +64,3 @@ If you use `vscode-nls` to localize your extension that you likely also use `vsc
 A good sample is the shared config built-in extensions use: [https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51](https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51)}
 
 \`\`\`
-
-A good sample is the shared config built-in extensions use: [https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51](https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51)A good sample is the shared config built-in extensions use: [https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51](https://github.com/Microsoft/vscode/blob/bf5b0585d2a8759541690b2c564b96cb604ff92e/extensions/shared.webpack.config.js#L29-L51)

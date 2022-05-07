@@ -2,13 +2,13 @@
 	"name": "markdown-editor",
 	"displayName": "Markdown Editor",
 	"description": "A powerful WYSIWYG editor for markdown files",
-	"version": "0.1.0",
-	"publisher": "adrotog",
+	"version": "0.2.0",
+	"publisher": "adamerose",
 	"private": true,
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/adrotog/vscode-markdown-editor"
+		"url": "https://github.com/adamerose/vscode-markdown-editor"
 	},
 	"engines": {
 		"vscode": "^1.32.0"
@@ -31,12 +31,17 @@
 						"filenamePattern": "*.md"
 					}
 				],
-				"priority": "option"
+				"priority": "default"
 			}
 		],
 		"commands": [
 			{
 				"command": "markdownEditor.openCustomEditor",
+				"title": "Open WYSIWYG Editor",
+				"icon": "$(preview)"
+			},
+			{
+				"command": "markdownEditor.openWithCustomEditor",
 				"title": "Open WYSIWYG Editor",
 				"icon": "$(preview)"
 			},
@@ -55,7 +60,7 @@
 			"explorer/context": [
 				{
 					"when": "resourceExtname == .md",
-					"command": "markdownEditor.openCustomEditor",
+					"command": "markdownEditor.openWithCustomEditor",
 					"group": "navigation"
 				}
 			],
