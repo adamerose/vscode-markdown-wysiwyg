@@ -40,6 +40,28 @@ import './styles.css';
 
 export default class MarkdownEditor extends ClassicEditorBase {}
 
+// Take a list of commands as names or callbacks and execute them in order stopping on the first success.
+// The returned function must be of form ( data, cancel ) => { ... }
+// See https://ckeditor.com/docs/ckeditor5/latest/api/module_core_editor_editor-Editor.html#member-keystrokes
+const attemptCommands = (commandNames) => (data, cancel) => {
+	for (let commandName of commandNames) {
+		if (typeof commandName === 'string') {
+			const command = editor.commands.get(commandName);
+			if (command?.isEnabled) {
+				console.debug(`Executed command ${commandName}.`);
+				command.execute();
+			} else {
+				console.debug(`Command ${commandName} is not enabled.`);
+			}
+		} else if (typeof commandName === 'function') {
+			console.debug(`Executed command ${commandName.toString()}.`);
+			commandName();
+		}
+		break;
+	}
+	cancel();
+};
+
 // Plugins to include in the build.
 MarkdownEditor.builtinPlugins = [
 	Alignment,
@@ -75,23 +97,26 @@ MarkdownEditor.builtinPlugins = [
 	TextTransformation,
 	Underline,
 
-	// Bind tab key to indentation instead of focusing
 	function (editor) {
-		editor.keystrokes.set('Tab', (data, cancel) => {
-			const command = editor.commands.get('indent');
-			if (command.isEnabled) {
-				command.execute();
-			}
-			cancel();
-		});
+		// Set keyboard shortcuts.
+		// See https://ckeditor.com/docs/ckeditor5/latest/api/module_core_editingkeystrokehandler-EditingKeystrokeHandler.html#function-set
 
-		editor.keystrokes.set('Shift+Tab', (data, cancel) => {
-			const command = editor.commands.get('outdent');
-			if (command.isEnabled) {
-				command.execute();
-			}
-			cancel();
-		});
+		editor.keystrokes.set('Tab', attemptCommands(['indent']));
+		editor.keystrokes.set('Shift+Tab', attemptCommands(['outdent']));
+
+		// Hotkeys for selecting headers. Ctrl+1 to Ctrl+6 for h1 to h6.
+		for (const i of [1, 2, 3, 4, 5, 6]) {
+			editor.keystrokes.set(
+				`Ctrl+${i}`,
+				attemptCommands([() => editor.execute('heading', { value: `heading${i}` })])
+			);
+		}
+
+		// Ctrl + backtick for paragraph
+		editor.keystrokes.set(
+			'Ctrl+`',
+			attemptCommands([() => editor.execute('heading', { value: 'paragraph' })])
+		);
 	},
 ];
 
