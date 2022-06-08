@@ -6,6 +6,7 @@ import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage';
 import AutoLink from '@ckeditor/ckeditor5-link/src/autolink';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+import Clipboard from '@ckeditor/ckeditor5-clipboard/src/clipboard';
 import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
 import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
 // import CodeBlock from '../ckeditor5-codeblock-with-syntax-highlight/src/codeblock';
@@ -70,6 +71,7 @@ MarkdownEditor.builtinPlugins = [
 	AutoLink,
 	BlockQuote,
 	Bold,
+	Clipboard,
 	Code,
 	CodeBlock,
 	Essentials,
