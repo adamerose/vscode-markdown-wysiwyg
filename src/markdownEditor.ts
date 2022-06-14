@@ -2,6 +2,8 @@ import { time } from 'console';
 import * as vscode from 'vscode';
 import { extensionState } from './extension';
 
+const prettier = require('prettier');
+
 export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 	public static register(context: vscode.ExtensionContext): vscode.Disposable {
 		const provider = new MarkdownEditorProvider(context);
@@ -81,7 +83,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			// Change EOL to \n because that's what CKEditor5 uses internally
 			text = text.replace(/(?:\r\n|\r|\n)/g, '\n');
 
-			console.log('Changed Document', [JSON.stringify(text)]);
+			console.log('updateWebview', [JSON.stringify(text)]);
 			webviewPanel.webview.postMessage({ type: 'documentChanged', text: text });
 		}
 
@@ -155,7 +157,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 					.then( editor => {
 						window.editor = editor;
 						editor.timeLastModified = new Date();
-						console.log( "CKEditor instance:", [JSON.stringify(editor )]);
+						console.log( "CKEditor instance:", editor);
 					} )
 					.catch( error => {
 						console.error("CKEditor Initialization Error:",  error );
@@ -166,16 +168,28 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			</html>`;
 	}
 
-	// Update the text document. Adds all new edits to a queue then calls them in order using .then
+	// Save new content to the text document. Adds all new edits to a queue then calls them in order using .then
 	private updateTextDocument(document: vscode.TextDocument, text: any) {
+		console.log('VS Code started updateTextDocument', [JSON.stringify(text)]);
+
+		let rawText = text;
+
+		// Autoformat the markdown text using Prettier
+		text = prettier.format(text, {
+			parser: 'markdown',
+		});
+
+		let prettierText = text;
+
 		// Standardize text EOL character to match document
 		// https://code.visualstudio.com/api/references/vscode-api#EndOfLine
 		const eol_chars = document?.eol == 2 ? '\r\n' : '\n';
 		text = text.replace(/(?:\r\n|\r|\n)/g, eol_chars);
 
-		console.log('VS Code started updateTextDocument', [JSON.stringify(text)]);
+		let finalText = text;
+		let fileText = document?.getText();
 
-		if (text != document?.getText()) {
+		if (text != fileText) {
 			// Just replace the entire document every time for this example extension.
 			// A more complete extension should compute minimal edits instead.
 			const newEdit = new vscode.WorkspaceEdit();
@@ -185,6 +199,12 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 				this.editQueueRunning = true;
 				this.processEditQueue(this.editQueue);
 			}
+
+			// console.debug('Updating Document because content changed');
+			// console.debug('rawText', JSON.stringify(rawText));
+			// console.debug('prettierText', JSON.stringify(prettierText));
+			// console.debug('finalText', JSON.stringify(finalText));
+			// console.debug('fileText', JSON.stringify(fileText));
 		}
 	}
 
