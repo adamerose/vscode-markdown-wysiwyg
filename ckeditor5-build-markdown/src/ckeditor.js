@@ -44,24 +44,28 @@ export default class MarkdownEditor extends ClassicEditorBase {}
 // Take a list of commands as names or callbacks and execute them in order stopping on the first success.
 // The returned function must be of form ( data, cancel ) => { ... }
 // See https://ckeditor.com/docs/ckeditor5/latest/api/module_core_editor_editor-Editor.html#member-keystrokes
-const attemptCommands = (commandNames) => (data, cancel) => {
-	for (let commandName of commandNames) {
-		if (typeof commandName === 'string') {
-			const command = editor.commands.get(commandName);
-			if (command?.isEnabled) {
-				console.debug(`Executed command ${commandName}.`);
-				command.execute();
-			} else {
-				console.debug(`Command ${commandName} is not enabled.`);
+const attemptCommands =
+	(commandNames, stopPropagation = true) =>
+	(data, cancel) => {
+		for (let commandName of commandNames) {
+			if (typeof commandName === 'string') {
+				const command = editor.commands.get(commandName);
+				if (command?.isEnabled) {
+					console.debug(`Executed command ${commandName}.`);
+					command.execute();
+				} else {
+					console.debug(`Command ${commandName} is not enabled.`);
+				}
+			} else if (typeof commandName === 'function') {
+				console.debug(`Executed command ${commandName.toString()}.`);
+				commandName();
 			}
-		} else if (typeof commandName === 'function') {
-			console.debug(`Executed command ${commandName.toString()}.`);
-			commandName();
+			break;
 		}
-		break;
-	}
-	cancel();
-};
+		if (stopPropagation) {
+			cancel();
+		}
+	};
 
 // Plugins to include in the build.
 MarkdownEditor.builtinPlugins = [
@@ -105,6 +109,22 @@ MarkdownEditor.builtinPlugins = [
 
 		editor.keystrokes.set('Tab', attemptCommands(['indent']));
 		editor.keystrokes.set('Shift+Tab', attemptCommands(['outdent']));
+
+		// We need to explicitly set this hotkey for pasting plain text.
+		// Normally CKEditor relies on the browser to trigger this, but VS Code doesn't have a plain paste hotkey.
+		// Recieving this in onDidReceiveMessage will run the paste command, and CKE5 detects shift is pressed and pastes as plaintext.
+		// We can't just programmatically trigger a paste from here, this is impossible in modern browsers due to security considerations.
+		editor.keystrokes.set(
+			'Ctrl+Shift+V',
+			attemptCommands(
+				[
+					() => {
+						window.vscode.postMessage({ type: 'plainPaste' });
+					},
+				],
+				true
+			)
+		);
 
 		// Hotkeys for selecting headers. Ctrl+1 to Ctrl+6 for h1 to h6.
 		for (const i of [1, 2, 3, 4, 5, 6]) {

@@ -113,6 +113,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 
 		// Receive message from the webview.
 		webviewPanel.webview.onDidReceiveMessage((e) => {
+			console.log('onDidReceiveMessage: ', [JSON.stringify(e)]);
 			switch (e.type) {
 				case 'webviewChanged':
 					this.updateTextDocument(document, e.text);
@@ -120,6 +121,8 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 				case 'initialized':
 					updateWebview();
 					return;
+				case 'plainPaste':
+					vscode.commands.executeCommand('editor.action.clipboardPasteAction');
 			}
 		});
 	}
