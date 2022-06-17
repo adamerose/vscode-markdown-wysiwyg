@@ -4,7 +4,7 @@
 // This was defined in markdownEditor.ts in the HTML snippet initializing CKEditor5. This line just stops IDE complaining.
 const editor = window.editor;
 editor.timeLastModified = new Date();
-editor.initialData = null;
+editor.savedData = null;
 
 // eslint-disable-next-line no-undef
 const vscode = acquireVsCodeApi();
@@ -55,16 +55,24 @@ function updateContent(/** @type {string} */ text) {
 	}
 
 	// Keep track of this to check if document is really dirty in change:data event
-	editor.initialData = editor.getData();
-
-	console.log('editor.initialData', [JSON.stringify(editor.initialData)]);
+	editor.savedData = editor.getData();
 }
 
 // Add listener for user modifying text in the editor
 editor.model.document.on('change:data', (e) => {
 	const data = editor.getData();
 
-	if (editor.initialData && editor.initialData != data) {
+	const dataHasChanged = editor.savedData != data;
+	console.log('change:data', [
+		JSON.stringify(e),
+		JSON.stringify(data),
+		JSON.stringify(dataHasChanged),
+	]);
+	if (dataHasChanged) {
+		// Once dataHasChanged is true, we want it to stay true until another save operation is performed.
+		// This is how VS Code document dirty flag works, so we have to do the same.
+		editor.savedData = null;
+
 		console.log('postMessage (webviewChanged)', [JSON.stringify(data)]);
 		editor.timeLastModified = new Date();
 		vscode.postMessage({
