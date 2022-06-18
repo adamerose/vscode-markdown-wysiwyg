@@ -1,3 +1,11 @@
+# About
+
+This is a work in progress - the documentation so far is mostly for my own reference and the extension is not yet published to the marketplace, but it is fully functional and I plan to publish soon.
+
+# Demo
+
+![](https://imgur.com/1v8CdQD.gif)
+
 # Scripts
 
 ```
