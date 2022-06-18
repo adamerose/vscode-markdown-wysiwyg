@@ -46,11 +46,31 @@ function updateContent(/** @type {string} */ text) {
 	// Render the content
 	if (editor.getData() != text) {
 		const selection = editor.model.document.selection.getFirstRange();
+		// TODO - this should be the element before the one referred to by selection
+		const backupSelection = editor.model.document.selection.getFirstRange();
+
 		editor.setData(text);
-		// set the selection back to where it was
+
+		// Set the selection back to where it was
+		function selectionIsValid(s) {
+			try {
+				const temp = editor.model.document._validateSelectionRange(s);
+				return true;
+			} catch {
+				return false;
+			}
+		}
+
+		let selectionToRestore;
+		if (selectionIsValid(selection)) {
+			selectionToRestore = selection;
+		} else if (selectionIsValid(backupSelection)) {
+			selectionToRestore = backupSelection;
+		} else {
+			return;
+		}
 		editor.model.change((writer) => {
-			writer.setSelection(selection);
-			// writer.appendText('foo', editor.model.document.getRoot(), 'end');
+			writer.setSelection(selectionToRestore);
 		});
 	}
 
