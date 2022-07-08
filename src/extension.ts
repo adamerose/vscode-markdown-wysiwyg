@@ -49,7 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
 		//
 	});
 
-	registerCommand('markdownEditor.openWithCustomEditor', async (uri: vscode.Uri) => {
+	registerCommand('markdownEditor.openFileWithCustomEditor', async (uri: vscode.Uri) => {
 		if (uri === undefined) {
 			vscode.window.showErrorMessage('Invalid URI.');
 		} else {
