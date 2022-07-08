@@ -25,7 +25,10 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	registerCommand('markdownEditor.openCustomEditor', async (uri: vscode.Uri) => {
-		if (vscode.window.activeTextEditor === undefined) {
+		if (uri !== undefined) {
+			// The uri will be defined when you right click a file and click the menu item to invoke this command
+			vscode.commands.executeCommand('vscode.openWith', uri, MarkdownEditorProvider.viewType);
+		} else if (vscode.window.activeTextEditor === undefined) {
 			vscode.window.showErrorMessage('No active text editor.');
 		} else if (vscode.window.activeTextEditor.document.languageId !== 'markdown') {
 			vscode.window.showErrorMessage('Active editor is not markdown.');
@@ -36,24 +39,6 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.activeTextEditor.document.uri,
 				MarkdownEditorProvider.viewType
 			);
-		}
-
-		// TODO - Figure out how to open custom editor in current tab instead of new tab
-		// Maybe try multiCommand.openFileInActiveEditor https://stackoverflow.com/a/60218926/3620725
-		// The above code is a workaround (close current editor then open new editor)
-		// vscode.commands.executeCommand(
-		// 	'workbench.action.reopenWithEditor',
-		// 	uri,
-		// 	MarkdownEditorProvider.viewType
-		// );
-		//
-	});
-
-	registerCommand('markdownEditor.openFileWithCustomEditor', async (uri: vscode.Uri) => {
-		if (uri === undefined) {
-			vscode.window.showErrorMessage('Invalid URI.');
-		} else {
-			vscode.commands.executeCommand('vscode.openWith', uri, MarkdownEditorProvider.viewType);
 		}
 
 		// TODO - Figure out how to open custom editor in current tab instead of new tab

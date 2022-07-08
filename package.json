@@ -48,11 +48,6 @@
 				"icon": "$(preview)"
 			},
 			{
-				"command": "markdownEditor.openFileWithCustomEditor",
-				"title": "Open WYSIWYG Editor",
-				"icon": "$(preview)"
-			},
-			{
 				"command": "markdownEditor.openDefaultEditor",
 				"title": "Open Default Editor",
 				"icon": "$(note)"
@@ -67,7 +62,7 @@
 			"explorer/context": [
 				{
 					"when": "resourceExtname == .md",
-					"command": "markdownEditor.openFileWithCustomEditor",
+					"command": "markdownEditor.openCustomEditor",
 					"group": "navigation"
 				}
 			],
