@@ -19,105 +19,76 @@ export function activate(context: vscode.ExtensionContext) {
 	// Register our custom editor providers
 	context.subscriptions.push(MarkdownEditorProvider.register(context));
 
-	context.subscriptions.push(
-		vscode.commands.registerCommand('markdownEditor.openCustomEditor', async (uri: vscode.Uri) => {
-			handleOpenCustomEditor(uri);
-		})
-	);
+	// Helper method to register commands and push subscription
+	function registerCommand(command: string, callback: (...args: any[]) => any) {
+		context.subscriptions.push(vscode.commands.registerCommand(command, callback));
+	}
 
-	context.subscriptions.push(
-		vscode.commands.registerCommand(
-			'markdownEditor.openWithCustomEditor',
-			async (uri: vscode.Uri) => {
-				handleOpenWithCustomEditor(uri);
-			}
-		)
-	);
-
-	context.subscriptions.push(
-		vscode.commands.registerCommand('markdownEditor.openDefaultEditor', async (uri: vscode.Uri) => {
-			handleOpenDefaultEditor(uri);
-		})
-	);
-
-	context.subscriptions.push(
-		vscode.commands.registerCommand('markdownEditor.DEBUG', async (uri: vscode.Uri) => {
-			console.log(
-				JSON.stringify(
-					{ state: extensionState, activeTextEditor: vscode.window.activeTextEditor },
-					null,
-					2
-				)
+	registerCommand('markdownEditor.openCustomEditor', async (uri: vscode.Uri) => {
+		if (vscode.window.activeTextEditor === undefined) {
+			vscode.window.showErrorMessage('No active text editor.');
+		} else if (vscode.window.activeTextEditor.document.languageId !== 'markdown') {
+			vscode.window.showErrorMessage('Active editor is not markdown.');
+		} else {
+			// vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+			vscode.commands.executeCommand(
+				'vscode.openWith',
+				vscode.window.activeTextEditor.document.uri,
+				MarkdownEditorProvider.viewType
 			);
-		})
-	);
+		}
 
-	// vscode.workspace.fs.writeFile(
-	// 	vscode.Uri.file('test.txt'),
-	// 	new TextEncoder().encode('test contents')
-	// );
-}
+		// TODO - Figure out how to open custom editor in current tab instead of new tab
+		// Maybe try multiCommand.openFileInActiveEditor https://stackoverflow.com/a/60218926/3620725
+		// The above code is a workaround (close current editor then open new editor)
+		// vscode.commands.executeCommand(
+		// 	'workbench.action.reopenWithEditor',
+		// 	uri,
+		// 	MarkdownEditorProvider.viewType
+		// );
+		//
+	});
 
-async function handleOpenDefaultEditor(uri: vscode.Uri) {
-	console.log('handleOpenDefaultEditor');
+	registerCommand('markdownEditor.openWithCustomEditor', async (uri: vscode.Uri) => {
+		if (uri === undefined) {
+			vscode.window.showErrorMessage('Invalid URI.');
+		} else {
+			vscode.commands.executeCommand('vscode.openWith', uri, MarkdownEditorProvider.viewType);
+		}
 
-	// Get URI of current markdown file which we keep track of in this extension as global state
-	if (extensionState?.activeDocument?.uri === undefined) {
-		vscode.window.showErrorMessage('extensionState?.activeDocument?.uri is undefined.');
-	} else {
-		// vscode.window.showInformationMessage('handleOpenDefaultEditor: ' + uri.toString());
-		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		vscode.commands.executeCommand(
-			'vscode.openWith',
-			extensionState?.activeDocument?.uri,
-			'default'
+		// TODO - Figure out how to open custom editor in current tab instead of new tab
+		// Maybe try multiCommand.openFileInActiveEditor https://stackoverflow.com/a/60218926/3620725
+		// The above code is a workaround (close current editor then open new editor)
+		// vscode.commands.executeCommand(
+		// 	'workbench.action.reopenWithEditor',
+		// 	uri,
+		// 	MarkdownEditorProvider.viewType
+		// );
+		//
+	});
+
+	registerCommand('markdownEditor.openDefaultEditor', async (uri: vscode.Uri) => {
+		// Get URI of current markdown file which we keep track of in this extension as global state
+		if (extensionState?.activeDocument?.uri === undefined) {
+			vscode.window.showErrorMessage('extensionState?.activeDocument?.uri is undefined.');
+		} else {
+			// vscode.window.showInformationMessage('handleOpenDefaultEditor: ' + uri.toString());
+			// vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+			vscode.commands.executeCommand(
+				'vscode.openWith',
+				extensionState?.activeDocument?.uri,
+				'default'
+			);
+		}
+	});
+
+	registerCommand('markdownEditor.DEBUG', async (uri: vscode.Uri) => {
+		console.log(
+			JSON.stringify(
+				{ state: extensionState, activeTextEditor: vscode.window.activeTextEditor },
+				null,
+				2
+			)
 		);
-	}
-}
-
-async function handleOpenCustomEditor(uri: vscode.Uri) {
-	console.log('handleOpenCustomEditor');
-
-	if (vscode.window.activeTextEditor === undefined) {
-		vscode.window.showErrorMessage('No active text editor.');
-	} else if (vscode.window.activeTextEditor.document.languageId !== 'markdown') {
-		vscode.window.showErrorMessage('Active editor is not markdown.');
-	} else {
-		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		vscode.commands.executeCommand(
-			'vscode.openWith',
-			vscode.window.activeTextEditor.document.uri,
-			MarkdownEditorProvider.viewType
-		);
-	}
-
-	// TODO - Figure out how to open custom editor in current tab instead of new tab
-	// Maybe try multiCommand.openFileInActiveEditor https://stackoverflow.com/a/60218926/3620725
-	// The above code is a workaround (close current editor then open new editor)
-	// vscode.commands.executeCommand(
-	// 	'workbench.action.reopenWithEditor',
-	// 	uri,
-	// 	MarkdownEditorProvider.viewType
-	// );
-	//
-}
-
-async function handleOpenWithCustomEditor(uri: vscode.Uri) {
-	console.log('handleOpenCustomEditor');
-
-	if (uri === undefined) {
-		vscode.window.showErrorMessage('Invalid URI.');
-	} else {
-		vscode.commands.executeCommand('vscode.openWith', uri, MarkdownEditorProvider.viewType);
-	}
-
-	// TODO - Figure out how to open custom editor in current tab instead of new tab
-	// Maybe try multiCommand.openFileInActiveEditor https://stackoverflow.com/a/60218926/3620725
-	// The above code is a workaround (close current editor then open new editor)
-	// vscode.commands.executeCommand(
-	// 	'workbench.action.reopenWithEditor',
-	// 	uri,
-	// 	MarkdownEditorProvider.viewType
-	// );
-	//
+	});
 }
