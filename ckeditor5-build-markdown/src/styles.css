@@ -62,8 +62,8 @@ h1 {
 .ck.ck-editor__editable .ck-code_selected {
 	font-family: var(--vscode-editor-font-family);
 	color: var(--vscode-textPreformat-foreground);
-	background-color: unset;
-	padding: 0px 5px;
+	background-color: var(--background-3);
+	padding: 0px;
 }
 
 /* Code blocks */
@@ -117,7 +117,7 @@ hr {
 	border-spacing: 0;
 	width: 100%;
 	height: 100%;
-	border: 1px solid var(--background-3);
+	border: 1px solid var(--background-4);
 }
 .ck-content .table {
 	margin: 10px 0px;
@@ -126,13 +126,13 @@ hr {
 .ck-content .table table td {
 	min-width: 2em;
 	padding: 5px 10px;
-	border: 1px solid var(--background-3);
+	border: 1px solid var(--background-4);
 }
 .ck-content .table table th {
 	min-width: 2em;
 	padding: 5px 10px;
-	border: 1px solid var(--background-3);
-	border-bottom: 1px solid var(--background-4);
+	border: 1px solid var(--background-4);
+	border-bottom: 1px solid var(--background-5);
 }
 
 /* -------------------------- CKEditor5 layout -------------------------- */
@@ -165,7 +165,7 @@ Editor body in Source mode:
 .ck-editor > .ck-editor__main > .ck-content {
 	flex-grow: 1;
 	overflow-y: scroll;
-	padding: 0 52px;
+	padding: 0 42px;
 	padding-bottom: 20px;
 }
 
@@ -203,8 +203,10 @@ Editor body in Source mode:
 	/* This is the background color for the toolbar */
 	--background-2: var(--vscode-editorWidget-background);
 
-	--background-3: var(--vscode-dropdown-background);
+	--background-3: var(--vscode-editorHoverWidget-statusBarBackground);
 	--background-4: var(--vscode-badge-background);
+	--background-5: var(--vscode-editorHoverWidget-foreground);
+	
 
 	/* From darkest to lightest */
 	--shadow-1: rgba(0, 0, 0, 20%);

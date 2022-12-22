@@ -43,34 +43,26 @@ function updateContent(/** @type {string} */ text) {
 		// TODO: Handle invalid markdown
 	}
 
-	// Render the content
+	// If the new text doesn't match the editor's current text, we need to update it but preserve the selection.
 	if (editor.getData() != text) {
-		const selection = editor.model.document.selection.getFirstRange();
-		// TODO - this should be the element before the one referred to by selection
-		const backupSelection = editor.model.document.selection.getFirstRange();
+		const userSelection = editor.model.document.selection.getFirstRange();
 
 		editor.setData(text);
 
-		// Set the selection back to where it was
-		function selectionIsValid(s) {
-			try {
-				const temp = editor.model.document._validateSelectionRange(s);
-				return true;
-			} catch {
-				return false;
-			}
-		}
-
-		let selectionToRestore;
-		if (selectionIsValid(selection)) {
-			selectionToRestore = selection;
-		} else if (selectionIsValid(backupSelection)) {
-			selectionToRestore = backupSelection;
-		} else {
-			return;
-		}
 		editor.model.change((writer) => {
-			writer.setSelection(selectionToRestore);
+			try {
+				writer.setSelection(userSelection);
+			} catch {
+				// Backup selection to use if userSelection became invalid after setData
+				// Usually userSelection should only become invalid if the document got shorter (its now out of bounds)
+				// so in that case we should put the cursor at the end of the last line in the document
+				let lastElement = editor.model.document
+					.getRoot()
+					.getChild(editor.model.document.getRoot().childCount - 1);
+				editor.model.change((writer) => {
+					writer.setSelection(lastElement, 'after');
+				});
+			}
 		});
 	}
 
