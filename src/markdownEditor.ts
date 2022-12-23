@@ -21,9 +21,6 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 
 	constructor(private readonly context: vscode.ExtensionContext) {}
 
-	private editQueue: Array<vscode.WorkspaceEdit> = [];
-	private editQueueRunning = false;
-
 	// Called when our custom editor is opened.
 	public async resolveCustomTextEditor(
 		document: vscode.TextDocument,
@@ -171,7 +168,7 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			</html>`;
 	}
 
-	// Save new content to the text document. Adds all new edits to a queue then calls them in order using .then
+	// Save new content to the text document
 	private updateTextDocument(document: vscode.TextDocument, text: any) {
 		console.log('VS Code started updateTextDocument', [JSON.stringify(text)]);
 
@@ -193,43 +190,16 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		let fileText = document?.getText();
 
 		if (text != fileText) {
-			// Just replace the entire document every time for this example extension.
-			// A more complete extension should compute minimal edits instead.
+			// TODO - Apply edits to the document instead of replacing the whole thing
 			const newEdit = new vscode.WorkspaceEdit();
 			newEdit.replace(document.uri, new vscode.Range(0, 0, document.lineCount, 0), text);
-			this.editQueue.push(newEdit);
-			if (this.editQueueRunning == false) {
-				this.editQueueRunning = true;
-				this.processEditQueue(this.editQueue);
-			}
+			vscode.workspace.applyEdit(newEdit);
 
 			// console.debug('Updating Document because content changed');
 			// console.debug('rawText', JSON.stringify(rawText));
 			// console.debug('prettierText', JSON.stringify(prettierText));
 			// console.debug('finalText', JSON.stringify(finalText));
 			// console.debug('fileText', JSON.stringify(fileText));
-		}
-	}
-
-	private processEditQueue(queue: Array<vscode.WorkspaceEdit>) {
-		console.log('VS Code started processEditQueue');
-		const edit = queue.shift();
-		if (edit != undefined) {
-			const text = (edit as any)._edits[0].edit._newText;
-			console.log('VS Code started applyEdit', [JSON.stringify(text)]);
-			vscode.workspace.applyEdit(edit).then(
-				() => {
-					console.log('VS Code finished applyEdit', [JSON.stringify(text)]);
-
-					this.processEditQueue(queue);
-				},
-				() => {
-					console.log('VS Code failed applyEdit', [JSON.stringify(text)]);
-				}
-			);
-		} else {
-			console.log('VS Code finished processEditQueue');
-			this.editQueueRunning = false;
 		}
 	}
 }
