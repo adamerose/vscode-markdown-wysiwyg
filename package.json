@@ -51,30 +51,23 @@
 				"command": "markdownEditor.openDefaultEditor",
 				"title": "Open Default Editor",
 				"icon": "$(note)"
-			},
-			{
-				"command": "markdownEditor.DEBUG",
-				"title": "DEBUG",
-				"icon": "$(alert)"
 			}
 		],
 		"menus": {
-			"explorer/context": [
-				{
-					"when": "resourceExtname == .md",
-					"command": "markdownEditor.openCustomEditor",
-					"group": "navigation"
-				}
-			],
 			"editor/title": [
 				{
 					"command": "markdownEditor.openCustomEditor",
-					"group": "navigation",
+					"group": "navigation@-1",
 					"when": "resourceLangId == markdown && !markdownEditor.editorIsActive"
 				},
 				{
 					"command": "markdownEditor.openDefaultEditor",
-					"group": "navigation",
+					"group": "navigation@-1",
+					"when": "resourceLangId == markdown && markdownEditor.editorIsActive"
+				},
+				{
+					"command": "markdown.showPreviewToSide",
+					"group": "navigation@1",
 					"when": "resourceLangId == markdown && markdownEditor.editorIsActive"
 				}
 			]

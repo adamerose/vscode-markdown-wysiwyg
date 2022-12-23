@@ -25,55 +25,39 @@ export function activate(context: vscode.ExtensionContext) {
 	}
 
 	registerCommand('markdownEditor.openCustomEditor', async (uri: vscode.Uri) => {
-		if (uri !== undefined && uri.path != vscode.window.activeTextEditor?.document.uri.path) {
-			// This case should happen only when the user right clicks a file in the explorer and
-			// clicks the "Open WYSIWYG Editor" option, and the file isn't already shown in an active editor
-			vscode.commands.executeCommand('vscode.openWith', uri, MarkdownEditorProvider.viewType);
-		} else if (vscode.window.activeTextEditor === undefined) {
-			// This case shouldn't happen
+		// Sanity check. These cases shouldn't happen
+		if (vscode.window.activeTextEditor === undefined) {
 			vscode.window.showErrorMessage('No active text editor.');
-		} else {
-			// Check if document is markdown
-			if (vscode.window.activeTextEditor.document.languageId !== 'markdown') {
-				vscode.window.showErrorMessage('Active editor is not markdown.');
-			}
-
-			// Close and reopen the document with our custom editor
-			vscode.commands.executeCommand('workbench.action.closeActiveEditor').then(() => {
-				vscode.commands.executeCommand('vscode.openWith', uri, MarkdownEditorProvider.viewType);
-			});
-
-			// TODO - Figure out how to open custom editor in current tab instead closing and reopening (causes minor flicker)
-			// Maybe look at multiCommand.openFileInActiveEditor https://stackoverflow.com/a/60218926/3620725
-			// The code below doesn't seem to work because it just prompts the user to pick an editor type, not sure if I can specify it. reopenWithEditor is not documented...
-			// vscode.commands.executeCommand(
-			// 	'workbench.action.reopenWithEditor',
-			// 	uri,
-			// 	MarkdownEditorProvider.viewType
-			// );
-			//
+			return;
 		}
+		if (vscode.window.activeTextEditor?.document.languageId !== 'markdown') {
+			vscode.window.showErrorMessage('Active editor is not markdown.');
+			return;
+		}
+
+		// Set URI to active editor if not provided
+		uri = uri ?? vscode.window.activeTextEditor?.document.uri;
+
+		// TODO - Figure out how to open custom editor in current tab instead of closing and reopening (causes minor flicker)
+		// Get current tab and store it in temp then close it after opening new custom editor
+		const temp = vscode.window.activeTextEditor;
+		vscode.commands.executeCommand('vscode.openWith', uri, MarkdownEditorProvider.viewType);
+		temp.hide();
+
+		// We can remove deprecated hide usage after this is resolved: https://github.com/microsoft/vscode/issues/169921
 	});
 
 	registerCommand('markdownEditor.openDefaultEditor', async (uri: vscode.Uri) => {
-		// Get URI of current markdown file which we keep track of in this extension as global state
+		// Sanity check. These cases shouldn't happen
 		if (extensionState?.activeDocument?.uri === undefined) {
 			vscode.window.showErrorMessage('extensionState?.activeDocument?.uri is undefined.');
-		} else {
-			vscode.window.showInformationMessage('openDefaultEditor');
-
-			vscode.commands.executeCommand(
-				'workbench.action.reopenTextEditor',
-				extensionState?.activeDocument?.uri
-			);
+			return;
 		}
-	});
 
-	registerCommand('markdownEditor.DEBUG', async (uri: vscode.Uri) => {
-		vscode.commands
-			.executeCommand('workbench.action.reopenEditorWith', extensionState?.activeDocument?.uri)
-			.then((onfulfilled) => {
-				console.log(onfulfilled);
-			});
+		// Get URI of current markdown file which we keep track of in this extension as global state
+		vscode.commands.executeCommand(
+			'workbench.action.reopenTextEditor',
+			extensionState?.activeDocument?.uri
+		);
 	});
 }
