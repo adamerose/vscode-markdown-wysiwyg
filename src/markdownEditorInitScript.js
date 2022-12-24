@@ -3,45 +3,21 @@
 
 // This was defined in markdownEditor.ts in the HTML snippet initializing CKEditor5. This line just stops IDE complaining.
 const editor = window.editor;
-editor.timeLastModified = new Date();
+
+// This will store the latest saved data from VS Code
 editor.savedData = null;
+
+editor.suppressNextDataChangeEvent = false;
 
 // eslint-disable-next-line no-undef
 const vscode = acquireVsCodeApi();
 window.vscode = vscode;
 
-editor.debounceActive = false;
-const debounceDelay = 5;
-const debounce = (callback, wait) => {
-	let timeoutId = null;
-	return (...args) => {
-		window.clearTimeout(timeoutId);
-		editor.debounceActive = true;
-		timeoutId = window.setTimeout(() => {
-			callback.apply(null, args);
-			editor.debounceActive = false;
-		}, wait);
-	};
-};
-
-function waitFor(condition, callback) {
-	if (!condition()) {
-		window.setTimeout(waitFor.bind(null, condition, callback), 50);
-	} else {
-		callback();
-	}
-}
-
 /**
  * Render the document in the webview.
  */
-function updateContent(/** @type {string} */ text) {
-	console.log('updateContent', [JSON.stringify(text)]);
-	try {
-		// TODO: Check if text is valid markdown
-	} catch {
-		// TODO: Handle invalid markdown
-	}
+function setEditorContent(/** @type {string} */ text) {
+	console.log('setEditorContent', [JSON.stringify(text)]);
 
 	// If the new text doesn't match the editor's current text, we need to update it but preserve the selection.
 	if (editor.getData() != text) {
@@ -72,26 +48,19 @@ function updateContent(/** @type {string} */ text) {
 
 // Add listener for user modifying text in the editor
 editor.model.document.on('change:data', (e) => {
-	const data = editor.getData();
-
-	const dataHasChanged = editor.savedData != data;
-	console.log('change:data', [
-		JSON.stringify(e),
-		JSON.stringify(data),
-		JSON.stringify(dataHasChanged),
-	]);
-	if (dataHasChanged) {
-		// Once dataHasChanged is true, we want it to stay true until another save operation is performed.
-		// This is how VS Code document dirty flag works, so we have to do the same.
-		editor.savedData = null;
-
-		console.log('postMessage (webviewChanged)', [JSON.stringify(data)]);
-		editor.timeLastModified = new Date();
-		vscode.postMessage({
-			type: 'webviewChanged',
-			text: data,
-		});
+	// This happens when the even was triggered by documentChanged event rather than user input
+	if (editor.suppressNextDataChangeEvent) {
+		editor.suppressNextDataChangeEvent = false;
+		return;
 	}
+
+	const data = editor.getData();
+	vscode.postMessage({
+		type: 'webviewChanged',
+		text: data,
+	});
+
+	editor.dirty = true;
 });
 
 // Handle messages sent from the extension to the webview
@@ -101,9 +70,9 @@ window.addEventListener('message', (event) => {
 	switch (message.type) {
 		case 'documentChanged': {
 			const text = message.text;
-			updateContent(text);
+			editor.suppressNextDataChangeEvent = true;
+			setEditorContent(text);
 
-			// Then persist state information.
 			// This state is returned in the call to `vscode.getState` below when a webview is reloaded.
 			vscode.setState({ text });
 		}
@@ -117,7 +86,7 @@ window.addEventListener('message', (event) => {
 // State lets us save information across these re-loads
 const state = vscode.getState();
 if (state) {
-	updateContent(state.text);
+	setEditorContent(state.text);
 }
 
 vscode.postMessage({

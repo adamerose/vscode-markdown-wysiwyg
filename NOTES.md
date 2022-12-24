@@ -25,7 +25,6 @@ fsafsaasf
 
 # TODO
 
-- Fix bugginess of file modified indicator
 - Add autolink to CKE editor
 - Sync scroll position (to plain editor and to markdown preview)
   - Do it like this [https://stackoverflow.com/questions/54556208/scroll-to-marker-in-ckeditor-5](https://stackoverflow.com/questions/54556208/scroll-to-marker-in-ckeditor-5)
