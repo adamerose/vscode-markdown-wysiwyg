@@ -107,6 +107,9 @@ window.addEventListener('message', (event) => {
 			// This state is returned in the call to `vscode.getState` below when a webview is reloaded.
 			vscode.setState({ text });
 		}
+		case 'scrollChanged': {
+			// TODO
+		}
 	}
 });
 

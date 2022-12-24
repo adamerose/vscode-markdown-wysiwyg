@@ -65,6 +65,12 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			handleFocusChange(e.webviewPanel);
 		});
 
+		// Initial scroll sync
+		webviewPanel.webview.postMessage({
+			type: 'scrollChanged',
+			scrollTop: document.lineAt(0).range.start.line,
+		});
+
 		////////////////////////////////////////////////////////////////////////////////////////
 		// Hook up event handlers so that we can synchronize the webview with the text document.
 		//
@@ -92,6 +98,19 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument((e) => {
 			console.log('Changed Document: ', [JSON.stringify(e.document.getText())]);
 		});
+
+		const onDidChangeTextEditorVisibleRanges = vscode.window.onDidChangeTextEditorVisibleRanges(
+			(e) => {
+				console.log('onDidChangeTextEditorVisibleRanges: ', [JSON.stringify(e)]);
+				if (e.textEditor.document === document) {
+					//  Sync scroll from editor to webview
+					webviewPanel.webview.postMessage({
+						type: 'scrollChanged',
+						scrollTop: e.textEditor.visibleRanges[0].start.line,
+					});
+				}
+			}
+		);
 
 		// Make sure we get rid of the listener when our editor is closed.
 		webviewPanel.onDidDispose(() => {

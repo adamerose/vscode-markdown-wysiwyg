@@ -27,10 +27,12 @@ fsafsaasf
 
 - Fix bugginess of file modified indicator
 - Add autolink to CKE editor
+- Sync scroll position (to plain editor and to markdown preview)
+  - Do it like this [https://stackoverflow.com/questions/54556208/scroll-to-marker-in-ckeditor-5](https://stackoverflow.com/questions/54556208/scroll-to-marker-in-ckeditor-5)
+  - And need this for importing that function [https://stackoverflow.com/questions/61307979/how-to-import-npm-packages-in-vs-code-webview-extension-development](https://stackoverflow.com/questions/61307979/how-to-import-npm-packages-in-vs-code-webview-extension-development)
 - Remove breadcrumb
   - [https://github.com/microsoft/vscode-extension-samples/issues/369#issuecomment-754231994](https://github.com/microsoft/vscode-extension-samples/issues/369#issuecomment-754231994)
   - [https://vscode-dev-community.slack.com/archives/C74CB59NE/p1644800862386389](https://vscode-dev-community.slack.com/archives/C74CB59NE/p1644800862386389)
-- Improve styling to be more like VS Code markdown preview
 - Add code formatting
   - [https://github.com/ckeditor/ckeditor5/issues/1354](https://github.com/ckeditor/ckeditor5/issues/1354)
   - [https://github.com/ckeditor/ckeditor5/issues/6309](https://github.com/ckeditor/ckeditor5/issues/6309)
@@ -43,4 +45,3 @@ fsafsaasf
   - [https://stackoverflow.com/a/59132169/3620725](https://stackoverflow.com/a/59132169/3620725)
   - Need this upstream issue completed first: [https://github.com/microsoft/vscode/issues/97095](https://github.com/microsoft/vscode/issues/97095)
 - Support extended HTML features [https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html#extending-formatting-support](https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html#extending-formatting-support)
-- Add side margins to editor to match markdown preview style
