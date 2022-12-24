@@ -1,8 +1,8 @@
 {
 	"name": "markdown-wysiwyg-editor",
-	"displayName": "Markdown Editor",
+	"displayName": "Markdown WYSIWYG Editor",
 	"description": "A powerful WYSIWYG editor for markdown files",
-	"version": "0.5.0",
+	"version": "0.6.0",
 	"publisher": "adamerose",
 	"private": true,
 	"license": "MIT",

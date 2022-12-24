@@ -4,10 +4,15 @@
 # Set up (see https://code.visualstudio.com/api/working-with-extensions/publishing-extension)
 npm install -g vsce
 
+# Package and install locally
 (cd ./ckeditor5-build-markdown && npm run build)
 vsce package
-code --install-extension markdown-wysiwyg-editor-0.5.0.vsix
+code --install-extension markdown-wysiwyg-editor-0.6.0.vsix
 
+# Publish extension
+vsce publish
+
+# Run CKEditor5 subproject
 (cd ./ckeditor5-build-markdown && npm start)
 ```
 
