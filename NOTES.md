@@ -40,6 +40,10 @@ fsafsaasf
 - Add code formatting
   - [https://github.com/ckeditor/ckeditor5/issues/1354](https://github.com/ckeditor/ckeditor5/issues/1354)
   - [https://github.com/ckeditor/ckeditor5/issues/6309](https://github.com/ckeditor/ckeditor5/issues/6309)
+  - [https://github.com/ckeditor/ckeditor5/issues/436](https://github.com/ckeditor/ckeditor5/issues/436)
+  - [https://github.com/ckeditor/ckeditor5/issues/5769](https://github.com/ckeditor/ckeditor5/issues/5769)
+  - I couldnt get this working without errors
+    - [https://github.com/regischen/CKEditor5-CodeBlock-With-Syntax-Highlight](https://github.com/regischen/CKEditor5-CodeBlock-With-Syntax-Highlight)
 - Support pasting clipboard images like [https://github.com/telesoho/vscode-markdown-paste-image](https://github.com/telesoho/vscode-markdown-paste-image)
   - Will need this [https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/upload-adapter.html](https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/upload-adapter.html)
   - [https://vscode-dev-community.slack.com/archives/C74CB59NE/p1647204814315079](https://vscode-dev-community.slack.com/archives/C74CB59NE/p1647204814315079)
@@ -49,3 +53,5 @@ fsafsaasf
   - [https://stackoverflow.com/a/59132169/3620725](https://stackoverflow.com/a/59132169/3620725)
   - Need this upstream issue completed first: [https://github.com/microsoft/vscode/issues/97095](https://github.com/microsoft/vscode/issues/97095)
 - Support extended HTML features [https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html#extending-formatting-support](https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html#extending-formatting-support)
+- Keep undo history after saving (which triggers setData)
+  - Possibly relevant: [https://github.com/ckeditor/ckeditor5/issues/4060](https://github.com/ckeditor/ckeditor5/issues/4060)
