@@ -38,13 +38,17 @@ export function activate(context: vscode.ExtensionContext) {
 		// Set URI to active editor if not provided
 		uri = uri ?? vscode.window.activeTextEditor?.document.uri;
 
-		// TODO - Figure out how to open custom editor in current tab instead of closing and reopening (causes minor flicker)
+		// Save current document first so user isn't prompted to save when closing the editor
+		// TODO - Figure out how to reopen custom editor in current tab so we can switch editors without saving
+		await vscode.window.activeTextEditor?.document.save();
+
 		// Get current tab and store it in temp then close it after opening new custom editor
 		const temp = vscode.window.activeTextEditor;
 		vscode.commands.executeCommand('vscode.openWith', uri, MarkdownEditorProvider.viewType);
 		temp.hide();
 
 		// We can remove deprecated hide usage after this is resolved: https://github.com/microsoft/vscode/issues/169921
+		// We did it this way to avoid the flickering problem described in the issue
 	});
 
 	registerCommand('markdownEditor.openDefaultEditor', async (uri: vscode.Uri) => {
@@ -53,6 +57,10 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showErrorMessage('extensionState?.activeDocument?.uri is undefined.');
 			return;
 		}
+
+		// Save current document first so user isn't prompted to save when closing the editor
+		// TODO - Figure out how to reopen custom editor in current tab so we can switch editors without saving
+		await extensionState?.activeDocument?.save();
 
 		// Get URI of current markdown file which we keep track of in this extension as global state
 		vscode.commands.executeCommand(
