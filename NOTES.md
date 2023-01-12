@@ -26,8 +26,6 @@ Communication between the webview and VS Code is done using `vscode.postMessage`
 
 The method `getHtmlForWebview` defines what this webview looks like, in our case importing and rendering a custom CKEditor5 build for markdown from the folder `ckeditor5-build-markdown`. It then runs `markdownEditorInitScript` inside the webview to register.
 
-fsafsaasf
-
 # TODO
 
 - Add autolink to CKE editor
@@ -47,11 +45,16 @@ fsafsaasf
 - Support pasting clipboard images like [https://github.com/telesoho/vscode-markdown-paste-image](https://github.com/telesoho/vscode-markdown-paste-image)
   - Will need this [https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/upload-adapter.html](https://ckeditor.com/docs/ckeditor5/latest/framework/guides/deep-dive/upload-adapter.html)
   - [https://vscode-dev-community.slack.com/archives/C74CB59NE/p1647204814315079](https://vscode-dev-community.slack.com/archives/C74CB59NE/p1647204814315079)
-- Fix active editor not being correct in case where onDidChangeViewState doesn't fire on initialization.
-  - [https://github.com/microsoft/vscode/issues/145648](https://github.com/microsoft/vscode/issues/145648)
 - Support DocumentSymbolProvider so that the outline and breadcrumb views aren't blank
   - [https://stackoverflow.com/a/59132169/3620725](https://stackoverflow.com/a/59132169/3620725)
   - Need this upstream issue completed first: [https://github.com/microsoft/vscode/issues/97095](https://github.com/microsoft/vscode/issues/97095)
 - Support extended HTML features [https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html#extending-formatting-support](https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html#extending-formatting-support)
-- Keep undo history after saving (which triggers setData)
-  - Possibly relevant: [https://github.com/ckeditor/ckeditor5/issues/4060](https://github.com/ckeditor/ckeditor5/issues/4060)
+- Figure out how to toggle between editors without saving and without showing a popup prompt
+- Fix the following markdown not being shown as bullets
+
+```
+- one
+
+- two
+- three
+```

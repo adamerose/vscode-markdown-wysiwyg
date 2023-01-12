@@ -21,15 +21,21 @@ function setEditorContent(/** @type {string} */ text) {
 
 	// If the new text doesn't match the editor's current text, we need to update it but preserve the selection.
 	if (editor.getData() != text) {
+		// Save selection so we can restore it after replacing the content
 		const userSelection = editor.model.document.selection.getFirstRange();
-
-		editor.setData(text);
+		
+		// Replace all content but calling insertContent with the whole document range as a selection
+		const selectionRange = editor.model.createRangeIn(editor.model.document.getRoot());
+		const viewFragment = editor.data.processor.toView(text);
+		const modelFragment = editor.data.toModel(viewFragment);
+		editor.model.insertContent(modelFragment, selectionRange);
+		editor.editing.view.scrollToTheSelection();
 
 		editor.model.change((writer) => {
 			try {
 				writer.setSelection(userSelection);
 			} catch {
-				// Backup selection to use if userSelection became invalid after setData
+				// Backup selection to use if userSelection became invalid after replacing content
 				// Usually userSelection should only become invalid if the document got shorter (its now out of bounds)
 				// so in that case we should put the cursor at the end of the last line in the document
 				let lastElement = editor.model.document
