@@ -72,7 +72,7 @@ h1 {
 	background-color: var(--vscode-textCodeBlock-background);
 	border: none;
 	padding: 16px;
-	margin: 0 0 0 14px;
+	margin: 8px 0 8px 14px;
 }
 /* Text inside code blocks */
 .ck-content pre code {

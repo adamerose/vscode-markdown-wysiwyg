@@ -29,7 +29,6 @@ function setEditorContent(/** @type {string} */ text) {
 		const viewFragment = editor.data.processor.toView(text);
 		const modelFragment = editor.data.toModel(viewFragment);
 		editor.model.insertContent(modelFragment, selectionRange);
-		editor.editing.view.scrollToTheSelection();
 
 		editor.model.change((writer) => {
 			try {

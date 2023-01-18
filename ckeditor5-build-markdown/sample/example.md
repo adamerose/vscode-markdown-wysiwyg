@@ -26,6 +26,26 @@
 ## Horizontal Rule
 
 ---
+## Code Block
+
+```typescript
+@Controller("cats")
+export class CatsController {
+  @Get()
+  findAll(@Req() request: Request): string {
+    return "This action returns all cats";
+  }
+}
+```
+```typescript
+@Controller("cats")
+export class CatsController {
+  @Get()
+  findAll(@Req() request: Request): string {
+    return "This action returns all cats";
+  }
+}
+```
 
 ## Emphasis
 
