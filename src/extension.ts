@@ -38,10 +38,6 @@ export function activate(context: vscode.ExtensionContext) {
 		// Set URI to active editor if not provided
 		uri = uri ?? vscode.window.activeTextEditor?.document.uri;
 
-		// Save current document first so user isn't prompted to save when closing the editor
-		// TODO - Figure out how to reopen custom editor in current tab so we can switch editors without saving
-		await vscode.window.activeTextEditor?.document.save();
-
 		// Get current tab and store it in temp then close it after opening new custom editor
 		const temp = vscode.window.activeTextEditor;
 		vscode.commands.executeCommand('vscode.openWith', uri, MarkdownEditorProvider.viewType);
@@ -57,10 +53,6 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showErrorMessage('extensionState?.activeDocument?.uri is undefined.');
 			return;
 		}
-
-		// Save current document first so user isn't prompted to save when closing the editor
-		// TODO - Figure out how to reopen custom editor in current tab so we can switch editors without saving
-		await extensionState?.activeDocument?.save();
 
 		// Get URI of current markdown file which we keep track of in this extension as global state
 		vscode.commands.executeCommand(

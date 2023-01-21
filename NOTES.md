@@ -51,6 +51,7 @@ The method `getHtmlForWebview` defines what this webview looks like, in our case
   - Need this upstream issue completed first: [https://github.com/microsoft/vscode/issues/97095](https://github.com/microsoft/vscode/issues/97095)
 - Support extended HTML features [https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html#extending-formatting-support](https://ckeditor.com/docs/ckeditor5/latest/features/markdown.html#extending-formatting-support)
 - Figure out how to toggle between editors without saving and without showing a popup prompt
+  - [https://github.com/microsoft/vscode/issues/169921](https://github.com/microsoft/vscode/issues/169921)
 - Improve support for keyboard shortcuts, eg. the shortcut should automatically appear in brackets when hovering the toolbar button
   - [https://ckeditor.com/docs/ckeditor5/latest/framework/guides/plugins/abbreviation-plugin/abbreviation-plugin-level-1.html](https://ckeditor.com/docs/ckeditor5/latest/framework/guides/plugins/abbreviation-plugin/abbreviation-plugin-level-1.html)
   - How does it work for built in shortcuts?  [https://github.com/ckeditor/ckeditor5/blob/7dea975058cfa1bd0c6b6b42a96187c3706547d9/packages/ckeditor5-basic-styles/src/bold/boldui.ts#L41](https://github.com/ckeditor/ckeditor5/blob/7dea975058cfa1bd0c6b6b42a96187c3706547d9/packages/ckeditor5-basic-styles/src/bold/boldui.ts#L41)
