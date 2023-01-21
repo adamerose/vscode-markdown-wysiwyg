@@ -1,17 +1,17 @@
 # About
 
-This extension provides a WYSIWYG editor for markdown (`.md`) files.
-
-Seamlessly view and edit your markdown documents with the same readable style as VS Code's built-in Markdown Preview,
+Seamlessly view and edit your markdown documents in a single tab! This extension provides a WYSIWYG editor for markdown (`.md`) files.
 
 ![](https://imgur.com/1v8CdQD.gif)
 
 # Features
 
-- Supports all standard markdown features and syntax
-- Easily switch between WYSIWYG and raw text mode
+- All standard markdown features are supported
+- Quickly switch between WYSIWYG and plain text mode
 - Inherits your VS Code color theme
-- Has the same clean style as VS Code's built in markdown preview
+- Same style as built in markdown preview
+- Copy/paste rich text content
+- Tables, images, code snippets, links, and more…
 
 # Hotkeys
 
