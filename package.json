@@ -1,14 +1,14 @@
 {
-	"name": "markdown-wysiwyg-editor",
-	"displayName": "Markdown WYSIWYG Editor",
-	"description": "A powerful WYSIWYG editor for markdown files",
-	"version": "0.6.0",
+	"name": "markdown-wysiwyg",
+	"displayName": "Markdown Editor",
+	"description": "A powerful markdown WYSIWYG editor",
+	"version": "0.7.2",
 	"publisher": "adamerose",
 	"private": true,
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/adamerose/vscode-markdown-editor"
+		"url": "https://github.com/adamerose/vscode-markdown-wysiwyg"
 	},
 	"engines": {
 		"vscode": "^1.32.0"

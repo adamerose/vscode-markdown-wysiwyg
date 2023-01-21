@@ -13,17 +13,27 @@ editor.suppressNextDataChangeEvent = false;
 const vscode = acquireVsCodeApi();
 window.vscode = vscode;
 
+// We use this to detect whether the document's initial content has been set yet
+const initializedFlag = false;
+
 /**
  * Render the document in the webview.
  */
 function setEditorContent(/** @type {string} */ text) {
 	console.log('setEditorContent', [JSON.stringify(text)]);
 
+	// We use setData instead of editor.model.change for initial content otherwise undo history starts with empty content
+	if (!initializedFlag) {
+		editor.setData(text);
+		initializedFlag = true;
+		return;
+	}
+
 	// If the new text doesn't match the editor's current text, we need to update it but preserve the selection.
 	if (editor.getData() != text) {
 		// Save selection so we can restore it after replacing the content
 		const userSelection = editor.model.document.selection.getFirstRange();
-		
+
 		// Replace all content but calling insertContent with the whole document range as a selection
 		const selectionRange = editor.model.createRangeIn(editor.model.document.getRoot());
 		const viewFragment = editor.data.processor.toView(text);
