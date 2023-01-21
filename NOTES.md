@@ -12,6 +12,7 @@ code --install-extension $(find -name "markdown-wysiwyg*" | tail -1)
 
 # Publish extension
 vsce publish
+npx ovsx publish -p ${OVSX_TOKEN}
 
 # Run CKEditor5 subproject
 (cd ./ckeditor5-build-markdown && npm start)
