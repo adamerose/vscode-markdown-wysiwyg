@@ -2,7 +2,7 @@
 	"name": "markdown-wysiwyg",
 	"displayName": "Markdown Editor",
 	"description": "A powerful markdown WYSIWYG editor",
-	"version": "0.7.4",
+	"version": "0.7.5",
 	"publisher": "adamerose",
 	"private": true,
 	"license": "GPLv3",
