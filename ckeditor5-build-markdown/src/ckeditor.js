@@ -33,7 +33,6 @@ import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
 import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
 import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
-import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 
 import './styles.css';
@@ -100,7 +99,6 @@ MarkdownEditor.builtinPlugins = [
 	Superscript,
 	Table,
 	TableToolbar,
-	TextTransformation,
 	Underline,
 
 	///////////////////////////////////////////////////////
