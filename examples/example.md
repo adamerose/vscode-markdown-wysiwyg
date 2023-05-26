@@ -1,5 +1,3 @@
-## Headings
-
 # h1 Heading
 
 ## h2 Heading
@@ -47,21 +45,21 @@ _This is italic text_
 ## Blockquotes
 
 > Blockquotes can also be nested...
-> 
+>
 > > ...by using greater-than signs right next to each other...
-> > 
+> >
 > > > ...or with spaces between arrows.
 
 ## Lists
 
 Unordered
 
-*   Create a list by starting a line with `+`, `-`, or `*`
-*   Sub-lists are made by indenting 2 spaces:
-    *   Ac tristique libero volutpat at
-    *   Facilisis in pretium nisl aliquet
-    *   Nulla volutpat aliquam velit
-*   Very easy!
+- Create a list by starting a line with `+`, `-`, or `*`
+- Sub-lists are made by indenting 2 spaces:
+  - Ac tristique libero volutpat at
+  - Facilisis in pretium nisl aliquet
+  - Nulla volutpat aliquam velit
+- Very easy!
 
 Ordered
 
@@ -73,7 +71,7 @@ Ordered
 
 Indented code
 
-```plaintext
+```
 line 1 of code
 line 2 of code
 line 3 of code
@@ -81,7 +79,7 @@ line 3 of code
 
 Block code with backticks
 
-```plaintext
+```
 line 1 of code
 line 2 of code
 line 3 of code
@@ -89,11 +87,11 @@ line 3 of code
 
 ## Tables
 
-| Option | Description |
-| --- | --- |
-| foo | Lorem ipsum dolor sit amet, |
-| bar | Ut enim ad minim veniam, quis nostrud exercitation ullamco. |
-| baz | Excepteur sint occaecat cupidatat non proident. |
+| Option | Description                                                 |
+| ------ | ----------------------------------------------------------- |
+| foo    | Lorem ipsum dolor sit amet,                                 |
+| bar    | Ut enim ad minim veniam, quis nostrud exercitation ullamco. |
+| baz    | Excepteur sint occaecat cupidatat non proident.             |
 
 ## Links
 
@@ -140,15 +138,15 @@ H2O
 
 ### Right aligned table columns
 
-| Option | Description |
-| --- | --- |
-| foo | Lorem ipsum dolor sit amet, |
-| bar | Ut enim ad minim veniam, quis nostrud exercitation ullamco. |
-| baz | Excepteur sint occaecat cupidatat non proident. |
+| Option | Description                                                 |
+| ------ | ----------------------------------------------------------- |
+| foo    | Lorem ipsum dolor sit amet,                                 |
+| bar    | Ut enim ad minim veniam, quis nostrud exercitation ullamco. |
+| baz    | Excepteur sint occaecat cupidatat non proident.             |
 
 ### Syntax highlighting
 
-```plaintext
+```
 var foo = function (bar) {
   return bar++;
 };

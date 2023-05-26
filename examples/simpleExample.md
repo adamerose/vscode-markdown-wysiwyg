@@ -6,15 +6,14 @@
 
 #### Header 4
 
-##### Header 5 
+##### Header 5
 
 ###### Header 6
 
 Text
 
 - Bullet 1
-- \-\*  
-  Bullet 2
+- Bullet 2
 - Bullet 3
 
 | Header1 | Header2 | Header3 |

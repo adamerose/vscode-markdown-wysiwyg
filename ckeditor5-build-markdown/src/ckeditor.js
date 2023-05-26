@@ -103,6 +103,10 @@ MarkdownEditor.builtinPlugins = [
 	TextTransformation,
 	Underline,
 
+	///////////////////////////////////////////////////////
+	// Hotkeys
+	///////////////////////////////////////////////////////
+
 	function (editor) {
 		// Set keyboard shortcuts.
 		// See https://ckeditor.com/docs/ckeditor5/latest/api/module_core_editingkeystrokehandler-EditingKeystrokeHandler.html#function-set
@@ -134,11 +138,22 @@ MarkdownEditor.builtinPlugins = [
 			);
 		}
 
-		// Ctrl + backtick for paragraph
 		editor.keystrokes.set(
-			'Ctrl+`',
+			'Ctrl+Shift+1',
 			attemptCommands([() => editor.execute('heading', { value: 'paragraph' })])
 		);
+
+		// There are already default shortcuts for bold, italic, underlink, hyperlink
+		editor.keystrokes.set('Ctrl+Shift+C', attemptCommands([() => editor.execute('code')]));
+		editor.keystrokes.set('Ctrl+Shift+Alt+C', attemptCommands([() => editor.execute('codeBlock')]));
+		editor.keystrokes.set(
+			'Ctrl+Shift+Alt+B',
+			attemptCommands([() => editor.execute('quoteBlock')])
+		);
+		editor.keystrokes.set('Ctrl+Shift+B', attemptCommands([() => editor.execute('bulletedList')]));
+		editor.keystrokes.set('Ctrl+Shift+n', attemptCommands([() => editor.execute('numberedList')]));
+		editor.keystrokes.set('Ctrl+Shift+n', attemptCommands([() => editor.execute('numberedList')]));
+		editor.keystrokes.set('Ctrl+Q', attemptCommands([() => editor.execute('bold')]));
 	},
 ];
 
