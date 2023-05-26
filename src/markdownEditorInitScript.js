@@ -13,14 +13,14 @@ editor.suppressNextDataChangeEvent = false;
 const vscode = acquireVsCodeApi();
 window.vscode = vscode;
 
-// We use this to detect whether the document's initial content has been set yet
-const initializedFlag = false;
+// We use this to track whether the document's initial content has been set yet
+var initializedFlag = false;
 
 /**
  * Render the document in the webview.
  */
 function setEditorContent(/** @type {string} */ text) {
-	console.log('setEditorContent', [JSON.stringify(text)]);
+	console.log('setEditorContent', { initializedFlag, text: JSON.stringify(text) });
 
 	// We use setData instead of editor.model.change for initial content otherwise undo history starts with empty content
 	if (!initializedFlag) {
@@ -80,7 +80,7 @@ editor.model.document.on('change:data', (e) => {
 
 // Handle messages sent from the extension to the webview
 window.addEventListener('message', (event) => {
-	console.log('Recieved Message', [JSON.stringify(event.data)]);
+	console.log('Recieved Message', { 'event.data': JSON.stringify(event.data) });
 	const message = event.data; // The data that the extension sent
 	switch (message.type) {
 		case 'documentChanged': {
