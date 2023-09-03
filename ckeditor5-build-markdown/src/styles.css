@@ -12,7 +12,7 @@ html {
 	background-color: var(--background-1);
 	font-size: var(--vscode-editor-font-size);
 
-	font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto;
+	font-family: var(--vscode-editor-font-family);
 	--ck-inner-shadow: none;
 }
 
@@ -149,7 +149,7 @@ Editor body in Source mode:
 .ck-editor > .ck-editor__main > .ck-source-editing-area > textarea
  */
 
- /* Outmost wrapper */
+/* Outmost wrapper */
 .ck-editor {
 	height: 100% !important;
 	display: flex;
@@ -206,7 +206,6 @@ Editor body in Source mode:
 	--background-3: var(--vscode-editorHoverWidget-statusBarBackground);
 	--background-4: var(--vscode-badge-background);
 	--background-5: var(--vscode-editorHoverWidget-foreground);
-	
 
 	/* From darkest to lightest */
 	--shadow-1: rgba(0, 0, 0, 20%);
@@ -228,10 +227,10 @@ Editor body in Source mode:
 
 	/* -- Non-color theming ------------------------------------------------------------------------ */
 
-	--vscode-font-family: 'Segoe WPC', 'Segoe UI', sans-serif;
+	--vscode-font-family: var(--vscode-editor-font-family);
 	--vscode-font-weight: normal;
 	--vscode-font-size: 13px;
-	--vscode-editor-font-family: Consolas, 'Courier New', monospace;
+	--vscode-editor-font-family: var(--vscode-editor-font-family);
 	--vscode-editor-font-weight: normal;
 	--vscode-editor-font-size: 14px;
 
