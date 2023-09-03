@@ -8,7 +8,7 @@ npm install -g vsce
 (cd ./ckeditor5-build-markdown && npm run build)
 # Remember to increment the version in package.json
 vsce package
-code --install-extension $(find -name "markdown-wysiwyg*" | tail -1)
+code --force --install-extension $(find -name "markdown-wysiwyg*" | tail -1)
 
 # Publish extension
 vsce publish
@@ -64,3 +64,5 @@ The method `getHtmlForWebview` defines what this webview looks like, in our case
 - two
 - three
 ```
+
+- Don't clear undo history on save

@@ -156,35 +156,37 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			)
 		);
 
-		return /* html */ `
-			<!DOCTYPE html>
+		// Use a nonce to only allow a specific script to be run.
+		const nonce = getNonce();
+
+		const html = String.raw; // https://prettier.io/docs/en/options.html#embedded-language-formatting
+		return html/* html */ `<!DOCTYPE html>
 			<html lang="en">
-			<head>
-				<meta charset="UTF-8">
-				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<title>Markdown WYSIWYG Editor</title>
-			</head>
-			<body>
-				<div id="editor">
-					
-				</div>
-				
-				<script src="${ckeditorUri}"></script>
-				<script>
-					MarkdownEditor
-					.create( document.querySelector( '#editor' ) )
-					.then( editor => {
-						window.editor = editor;
-						editor.timeLastModified = new Date();
-						console.log( "CKEditor instance:", editor);
-					} )
-					.catch( error => {
-						console.error("CKEditor Initialization Error:",  error );
-					} );
-				</script>
-				<script src="${initScriptUri}"></script>
-			</body>
-			</html>`;
+				<head>
+					<meta http-equiv="Content-Security-Policy" content="script-src 'nonce-${nonce}';" />
+
+					<meta charset="UTF-8" />
+					<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+					<title>Markdown WYSIWYG Editor</title>
+				</head>
+				<body>
+					<div id="editor"></div>
+
+					<script nonce="${nonce}" src="${ckeditorUri}"></script>
+					<script nonce="${nonce}">
+						MarkdownEditor.create(document.querySelector('#editor'))
+							.then((editor) => {
+								window.editor = editor;
+								editor.timeLastModified = new Date();
+								console.log('CKEditor instance:', editor);
+							})
+							.catch((error) => {
+								console.error('CKEditor Initialization Error:', error);
+							});
+					</script>
+					<script nonce="${nonce}" src="${initScriptUri}"></script>
+				</body>
+			</html> `;
 	}
 
 	// Save new content to the text document
@@ -221,4 +223,13 @@ export class MarkdownEditorProvider implements vscode.CustomTextEditorProvider {
 			// console.debug('fileText', JSON.stringify(fileText));
 		}
 	}
+}
+
+function getNonce() {
+	let text = '';
+	const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	for (let i = 0; i < 32; i++) {
+		text += possible.charAt(Math.floor(Math.random() * possible.length));
+	}
+	return text;
 }
